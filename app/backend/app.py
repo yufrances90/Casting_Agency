@@ -8,18 +8,23 @@ from flask import \
     jsonify, \
     request, \
     abort
+from flask_sqlalchemy import SQLAlchemy
+from models import setup_db
+from flask_cors import CORS
 
 
-APP = Flask(__name__)
+app = Flask(__name__)
+app.config.from_object('config.DevConfig')
+setup_db(app)
+CORS(app)
 
 
-@APP.route('/')
+@app.route('/')
 def index():
-    '''
-    Test endpoint
-    '''
-    return jsonify('Hello')
+    return jsonify({
+        'msg': 'Wecome to Casting Agency API'
+    })
 
 
 if __name__ == "__main__":
-    APP.run()
+    app.run()
