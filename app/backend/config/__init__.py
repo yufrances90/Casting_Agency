@@ -13,3 +13,4 @@ class DevConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = f'postgres://{username}@localhost:{port}/{dname}'
     DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
