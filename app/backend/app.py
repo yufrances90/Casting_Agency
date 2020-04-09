@@ -8,18 +8,21 @@ from flask import \
     jsonify, \
     request, \
     abort
+from flask_sqlalchemy import SQLAlchemy
 
+from models import setup_db
 
-APP = Flask(__name__)
+app = Flask(__name__)
+app.config.from_object('config.DatabaseConfig')
+setup_db(app)
 
-
-@APP.route('/')
+@app.route('/')
 def index():
-    '''
-    Test endpoint
-    '''
+
+    print(app.config['SQLALCHEMY_DATABASE_URI'])
+
     return jsonify('Hello')
 
 
 if __name__ == "__main__":
-    APP.run()
+    app.run()
