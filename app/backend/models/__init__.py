@@ -20,6 +20,11 @@ def setup_db(app):
     db.init_app(app)
     migrate.init_app(app)
 
+def get_actors_by_movie(movie_id):
+    return db.session.query(Actor).join(Show).join(Movie).filter(Movie.id == movie_id).all()
+
+def get_movies_by_actor(actor_id):
+    return db.session.query(Movie).join(Show).join(Actor).filter(Actor.id == actor_id).all()
 
 class Gender(enum.Enum):
     female = 'F'

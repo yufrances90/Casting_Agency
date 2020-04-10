@@ -14,7 +14,14 @@ from flask import \
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from models import setup_db, Actor, Movie, Gender, Show
+from models import \
+    setup_db, \
+    Actor, \
+    Movie, \
+    Gender, \
+    Show, \
+    get_actors_by_movie, \
+    get_movies_by_actor
 
 
 app = Flask(__name__)
@@ -110,9 +117,17 @@ def get_actor(actor_id):
     if actor is None:
         abort(404, description=f'No actor is found for id {actor_id}')
 
+    movies = get_movies_by_actor(actor_id)
+
+    formatted_movies = [movie.format() for movie in movies]
+
+    formatted_actor = actor.format()
+
+    formatted_actor['movies'] = formatted_movies
+
     return jsonify({
         'success': True,
-        'data': actor.format()
+        'data': formatted_actor
     })
 
 
@@ -198,9 +213,17 @@ def get_movie(movie_id):
     if movie is None:
         abort(404, description=f'No movie is found for id {movie_id}')
 
+    actors = get_actors_by_movie(movie_id)
+
+    formatted_actors = [actor.format() for actor in actors]
+
+    formatted_movie = movie.format()
+
+    formatted_movie['actors'] = formatted_actors
+
     return jsonify({
         'success': True,
-        'data': movie.format()
+        'data': formatted_movie
     })
 
 
