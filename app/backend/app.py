@@ -29,25 +29,28 @@ def index():
         'msg': 'Wecome to Casting Agency API'
     })
 
+
 @app.route('/actors', methods=['GET'])
 def get_all_actors():
 
-    res =  Actor.query.all()
+    res = Actor.query.all()
 
-    return jsonify( {
+    return jsonify({
         'success': True,
         'data': [actor.format() for actor in res]
     })
+
 
 @app.route('/movies', methods=['GET'])
 def get_all_movies():
 
     res = Movie.query.all()
 
-    return jsonify( {
+    return jsonify({
         'success': True,
         'data': [movie.format() for movie in res]
-    }) 
+    })
+
 
 @app.route('/actors', methods=['POST'])
 def create_new_actor():
@@ -76,8 +79,9 @@ def create_new_movie():
     release_date = request_data['release_date']
 
     movie = Movie(
-        title=title, 
-        release_date=datetime.datetime.strptime(release_date, '%Y-%m-%d %H:%M:%S')
+        title=title,
+        release_date=datetime.datetime.strptime(
+            release_date, '%Y-%m-%d %H:%M:%S')
     )
 
     movie.insert()
@@ -86,10 +90,11 @@ def create_new_movie():
         'success': True
     })
 
+
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
 
-    movie = Movie.query.filter_by(id = movie_id).one_or_none()
+    movie = Movie.query.filter_by(id=movie_id).one_or_none()
 
     if movie is None:
         abort(404, description=f'No movie is found for id {movie_id}')
@@ -100,10 +105,11 @@ def delete_movie(movie_id):
         'success': True
     })
 
+
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 def delete_actor(actor_id):
 
-    actor = Actor.query.filter_by(id = actor_id).one_or_none()
+    actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
     if actor is None:
         abort(404, description=f'No actor is found for id {actor_id}')
@@ -114,10 +120,11 @@ def delete_actor(actor_id):
         'success': True
     })
 
+
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
 def update_actor(actor_id):
 
-    actor = Actor.query.filter_by(id = actor_id).one_or_none()
+    actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
     if actor is None:
         abort(404, description=f'No actor is found for id {actor_id}')
@@ -138,10 +145,11 @@ def update_actor(actor_id):
         'success': True
     })
 
+
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 def update_movie(movie_id):
 
-    movie = Movie.query.filter_by(id = movie_id).one_or_none()
+    movie = Movie.query.filter_by(id=movie_id).one_or_none()
 
     if movie is None:
         abort(404, description=f'No movie is found for id {movie_id}')
@@ -152,7 +160,8 @@ def update_movie(movie_id):
     release_date = request_data['release_date']
 
     movie.title = title
-    movie.release_date = datetime.datetime.strptime(release_date, '%Y-%m-%d %H:%M:%S')
+    movie.release_date = datetime.datetime.strptime(
+        release_date, '%Y-%m-%d %H:%M:%S')
 
     movie.update()
 
@@ -160,10 +169,11 @@ def update_movie(movie_id):
         'success': True
     })
 
+
 @app.route('/movies/<int:movie_id>', methods=['GET'])
 def get_movie(movie_id):
 
-    movie = Movie.query.filter_by(id = movie_id).one_or_none()
+    movie = Movie.query.filter_by(id=movie_id).one_or_none()
 
     if movie is None:
         abort(404, description=f'No movie is found for id {movie_id}')
@@ -177,7 +187,7 @@ def get_movie(movie_id):
 @app.route('/actors/<int:actor_id>', methods=['GET'])
 def get_actor(actor_id):
 
-    actor = Actor.query.filter_by(id = actor_id).one_or_none()
+    actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
     if actor is None:
         abort(404, description=f'No actor is found for id {actor_id}')
@@ -186,6 +196,7 @@ def get_actor(actor_id):
         'success': True,
         'data': actor.format()
     })
+
 
 @app.errorhandler(404)
 def resource_not_found(e):

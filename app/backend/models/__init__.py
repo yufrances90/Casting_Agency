@@ -25,6 +25,7 @@ class Gender(enum.Enum):
     female = 'F'
     male = 'M'
 
+
 class Movie(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
