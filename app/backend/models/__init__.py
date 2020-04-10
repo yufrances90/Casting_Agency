@@ -1,4 +1,5 @@
 import enum
+import json
 
 from sqlalchemy import \
     Column, \
@@ -23,7 +24,6 @@ def setup_db(app):
 class Gender(enum.Enum):
     female = 'F'
     male = 'M'
-
 
 class Movie(db.Model):
     __tablename__ = 'movies'
@@ -82,5 +82,5 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender
+            'gender': self.gender.value
         }

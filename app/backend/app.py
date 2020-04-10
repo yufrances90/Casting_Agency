@@ -36,7 +36,7 @@ def get_all_actors():
 
     return jsonify( {
         'success': True,
-        'actors': [actor.format() for actor in res]
+        'data': [actor.format() for actor in res]
     })
 
 @app.route('/movies', methods=['GET'])
@@ -46,7 +46,7 @@ def get_all_movies():
 
     return jsonify( {
         'success': True,
-        'movies': [movie.format() for movie in res]
+        'data': [movie.format() for movie in res]
     }) 
 
 @app.route('/actors', methods=['POST'])
@@ -160,6 +160,32 @@ def update_movie(movie_id):
         'success': True
     })
 
+@app.route('/movies/<int:movie_id>', methods=['GET'])
+def get_movie(movie_id):
+
+    movie = Movie.query.filter_by(id = movie_id).one_or_none()
+
+    if movie is None:
+        abort(404, description=f'No movie is found for id {movie_id}')
+
+    return jsonify({
+        'success': True,
+        'data': movie.format()
+    })
+
+
+@app.route('/actors/<int:actor_id>', methods=['GET'])
+def get_actor(actor_id):
+
+    actor = Actor.query.filter_by(id = actor_id).one_or_none()
+
+    if actor is None:
+        abort(404, description=f'No actor is found for id {actor_id}')
+
+    return jsonify({
+        'success': True,
+        'data': actor.format()
+    })
 
 @app.errorhandler(404)
 def resource_not_found(e):
