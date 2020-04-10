@@ -21,7 +21,8 @@ from models import \
     Gender, \
     Show, \
     get_actors_by_movie, \
-    get_movies_by_actor
+    get_movies_by_actor, \
+    check_if_movie_or_actor_is_bounded
 
 
 app = Flask(__name__)
@@ -33,7 +34,8 @@ CORS(app)
 @app.route('/')
 def index():
     return jsonify({
-        'msg': 'Wecome to Casting Agency API'
+        'msg': 'Wecome to Casting Agency API',
+        'success': True
     })
 
 
@@ -85,6 +87,12 @@ def create_new_actor():
 
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 def delete_actor(actor_id):
+
+    if (check_if_movie_or_actor_is_bounded(actor_id=actor_id)):
+        return jsonify({
+            'success': False,
+            'msg': f'Cannot delete actor due to existing shows - ID: {actor_id}'
+        })
 
     actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
@@ -196,6 +204,12 @@ def create_new_movie():
 
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
+
+    if (check_if_movie_or_actor_is_bounded(movie_id=movie_id)):
+        return jsonify({
+            'success': False,
+            'msg': f'Cannot delete actor due to existing shows - ID: {movie_id}'
+        })
 
     movie = Movie.query.filter_by(id=movie_id).one_or_none()
 
