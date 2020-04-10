@@ -86,6 +86,38 @@ def create_new_movie():
         'success': True
     })
 
+@app.route('/movies/<int:movie_id>', methods=['DELETE'])
+def delete_movie(movie_id):
+
+    movie = Movie.query.filter_by(id = movie_id).one_or_none()
+
+    if movie is None:
+        abort(404, description=f'No movie is found for id {movie_id}')
+
+    movie.delete()
+
+    return jsonify({
+        'success': True
+    })
+
+@app.route('/actors/<int:actor_id>', methods=['DELETE'])
+def delete_actor(actor_id):
+
+    actor = Actor.query.filter_by(id = actor_id).one_or_none()
+
+    if actor is None:
+        abort(404, description=f'No actor is found for id {actor_id}')
+
+    actor.delete()
+
+    return jsonify({
+        'success': True
+    })
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
 
 if __name__ == "__main__":
     app.run()
