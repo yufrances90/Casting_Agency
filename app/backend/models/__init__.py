@@ -93,3 +93,7 @@ class Show(db.Model):
     id = Column(Integer, primary_key = True)
     movie_id = Column(Integer, db.ForeignKey('movies.id'), nullable = False)
     actor_id = Column(Integer, db.ForeignKey('actors.id'), nullable = False)
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()

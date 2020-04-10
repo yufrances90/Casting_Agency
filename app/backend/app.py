@@ -14,7 +14,7 @@ from flask import \
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from models import setup_db, Actor, Movie, Gender
+from models import setup_db, Actor, Movie, Gender, Show
 
 
 app = Flask(__name__)
@@ -30,6 +30,9 @@ def index():
     })
 
 
+''' ACTORS '''
+
+
 @app.route('/actors', methods=['GET'])
 def get_all_actors():
 
@@ -38,17 +41,6 @@ def get_all_actors():
     return jsonify({
         'success': True,
         'data': [actor.format() for actor in res]
-    })
-
-
-@app.route('/movies', methods=['GET'])
-def get_all_movies():
-
-    res = Movie.query.all()
-
-    return jsonify({
-        'success': True,
-        'data': [movie.format() for movie in res]
     })
 
 
@@ -64,42 +56,6 @@ def create_new_actor():
     actor = Actor(name=name, age=age, gender=gender)
 
     actor.insert()
-
-    return jsonify({
-        'success': True
-    })
-
-
-@app.route('/movies', methods=['POST'])
-def create_new_movie():
-
-    request_data = json.loads(request.data)
-
-    title = request_data['title']
-    release_date = request_data['release_date']
-
-    movie = Movie(
-        title=title,
-        release_date=datetime.datetime.strptime(
-            release_date, '%Y-%m-%d %H:%M:%S')
-    )
-
-    movie.insert()
-
-    return jsonify({
-        'success': True
-    })
-
-
-@app.route('/movies/<int:movie_id>', methods=['DELETE'])
-def delete_movie(movie_id):
-
-    movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-    if movie is None:
-        abort(404, description=f'No movie is found for id {movie_id}')
-
-    movie.delete()
 
     return jsonify({
         'success': True
@@ -146,6 +102,70 @@ def update_actor(actor_id):
     })
 
 
+@app.route('/actors/<int:actor_id>', methods=['GET'])
+def get_actor(actor_id):
+
+    actor = Actor.query.filter_by(id=actor_id).one_or_none()
+
+    if actor is None:
+        abort(404, description=f'No actor is found for id {actor_id}')
+
+    return jsonify({
+        'success': True,
+        'data': actor.format()
+    })
+
+
+''' MOVIES '''
+
+
+@app.route('/movies', methods=['GET'])
+def get_all_movies():
+
+    res = Movie.query.all()
+
+    return jsonify({
+        'success': True,
+        'data': [movie.format() for movie in res]
+    })
+
+
+@app.route('/movies', methods=['POST'])
+def create_new_movie():
+
+    request_data = json.loads(request.data)
+
+    title = request_data['title']
+    release_date = request_data['release_date']
+
+    movie = Movie(
+        title=title,
+        release_date=datetime.datetime.strptime(
+            release_date, '%Y-%m-%d %H:%M:%S')
+    )
+
+    movie.insert()
+
+    return jsonify({
+        'success': True
+    })
+
+
+@app.route('/movies/<int:movie_id>', methods=['DELETE'])
+def delete_movie(movie_id):
+
+    movie = Movie.query.filter_by(id=movie_id).one_or_none()
+
+    if movie is None:
+        abort(404, description=f'No movie is found for id {movie_id}')
+
+    movie.delete()
+
+    return jsonify({
+        'success': True
+    })
+
+
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 def update_movie(movie_id):
 
@@ -184,18 +204,27 @@ def get_movie(movie_id):
     })
 
 
-@app.route('/actors/<int:actor_id>', methods=['GET'])
-def get_actor(actor_id):
+''' SHOWS '''
 
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
-    if actor is None:
-        abort(404, description=f'No actor is found for id {actor_id}')
+@app.route('/shows', methods=['POST'])
+def save_new_show():
+
+    request_data = json.loads(request.data)
+
+    actor_id = request_data['actor_id']
+    movie_id = request_data['movie_id']
+
+    show = Show(actor_id=actor_id, movie_id=movie_id)
+
+    show.insert()
 
     return jsonify({
-        'success': True,
-        'data': actor.format()
+        'success': True
     })
+
+
+''' ERROR HANDLING '''
 
 
 @app.errorhandler(404)
