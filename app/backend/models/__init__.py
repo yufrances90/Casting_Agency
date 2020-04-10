@@ -1,4 +1,5 @@
 import enum
+import json
 
 from sqlalchemy import \
     Column, \
@@ -24,7 +25,6 @@ class Gender(enum.Enum):
     female = 'F'
     male = 'M'
 
-
 class Movie(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer, primary_key=True)
@@ -39,7 +39,7 @@ class Movie(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
 
     def delete(self):
@@ -70,7 +70,7 @@ class Actor(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update():
+    def update(self):
         db.session.commit()
 
     def delete(self):
@@ -82,5 +82,5 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender
+            'gender': self.gender.value
         }
