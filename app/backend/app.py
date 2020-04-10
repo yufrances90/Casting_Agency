@@ -43,11 +43,25 @@ def index():
 @app.route('/actors', methods=['GET'])
 def get_all_actors():
 
-    res = Actor.query.all()
+    actors = Actor.query.all()
+    
+    formatted_actors = []
+
+    for actor in actors:
+
+        formatted_actor = actor.format()
+
+        movies = get_movies_by_actor(actor.id)
+
+        formatted_movies = [movie.format() for movie in movies]
+
+        formatted_actor['movies'] = formatted_movies
+
+        formatted_actors.append(formatted_actor)
 
     return jsonify({
         'success': True,
-        'data': [actor.format() for actor in res]
+        'data': formatted_actors
     })
 
 
@@ -137,11 +151,25 @@ def get_actor(actor_id):
 @app.route('/movies', methods=['GET'])
 def get_all_movies():
 
-    res = Movie.query.all()
+    movies = Movie.query.all()
+
+    formatted_movies = []
+
+    for movie in movies:
+
+        actors = get_actors_by_movie(movie.id)
+
+        formatted_actors = [actor.format() for actor in actors]
+
+        formatted_movie = movie.format()
+
+        formatted_movie['actors'] = formatted_actors
+
+        formatted_movies.append(formatted_movie)
 
     return jsonify({
         'success': True,
-        'data': [movie.format() for movie in res]
+        'data': formatted_movies
     })
 
 
