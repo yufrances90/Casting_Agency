@@ -22,7 +22,9 @@ from models import \
     Show, \
     get_actors_by_movie, \
     get_movies_by_actor, \
-    check_if_movie_or_actor_is_bounded
+    check_if_movie_or_actor_is_bounded, \
+    delete_show, \
+    get_show_by_movie_and_actor
 
 
 app = Flask(__name__)
@@ -46,7 +48,7 @@ def index():
 def get_all_actors():
 
     actors = Actor.query.all()
-    
+
     formatted_actors = []
 
     for actor in actors:
@@ -91,7 +93,7 @@ def delete_actor(actor_id):
     if (check_if_movie_or_actor_is_bounded(actor_id=actor_id)):
         return jsonify({
             'success': False,
-            'msg': f'Cannot delete actor due to existing shows - ID: {actor_id}'
+            'msg': 'Cannot delete actor due to existing shows'
         })
 
     actor = Actor.query.filter_by(id=actor_id).one_or_none()
@@ -208,7 +210,7 @@ def delete_movie(movie_id):
     if (check_if_movie_or_actor_is_bounded(movie_id=movie_id)):
         return jsonify({
             'success': False,
-            'msg': f'Cannot delete actor due to existing shows - ID: {movie_id}'
+            'msg': 'Cannot delete movie due to existing shows'
         })
 
     movie = Movie.query.filter_by(id=movie_id).one_or_none()
@@ -280,9 +282,32 @@ def save_new_show():
     actor_id = request_data['actor_id']
     movie_id = request_data['movie_id']
 
+    show = get_show_by_movie_and_actor(movie_id, actor_id)
+
+    if show is not None:
+        return jsonify({
+            'success': False,
+            'msg': 'Cannot add new show due to existing shows'
+        })
+
     show = Show(actor_id=actor_id, movie_id=movie_id)
 
     show.insert()
+
+    return jsonify({
+        'success': True
+    })
+
+
+@app.route('/shows', methods=['DELETE'])
+def delete_shows():
+
+    request_data = json.loads(request.data)
+
+    actor_id = request_data['actor_id']
+    movie_id = request_data['movie_id']
+
+    delete_show(movie_id, actor_id)
 
     return jsonify({
         'success': True
