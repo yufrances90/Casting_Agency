@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -11,6 +11,8 @@ import {
 import {
     AccountCircle
 } from '@material-ui/icons';
+
+import { Auth0Context } from '../contexts/auth0-context'; 
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,13 +28,17 @@ const useStyles = makeStyles((theme) => ({
 
 const CAppBar = () => {
 
+    const auth0 = useContext(Auth0Context);
+
+    console.log(auth0);
+
     return (
         <AppBar position="static">
             <Toolbar style={{background: "black"}}>
                 <Typography variant="h6" className={useStyles().title}>
                     Casting Agency
                 </Typography>
-                <IconButton color="inherit">
+                <IconButton color="inherit" onClick={auth0.loginWithRedirect}>
                     <AccountCircle />
                 </IconButton>
             </Toolbar>
