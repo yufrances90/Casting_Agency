@@ -1,3 +1,5 @@
 
 app/backend/env/*
 *.pyc
+app/backend/env.sh
+app/backend/env.sh
