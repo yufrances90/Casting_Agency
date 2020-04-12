@@ -65,7 +65,7 @@ def get_all_actors():
 
     return jsonify({
         'success': True,
-        'data': formatted_actors
+        'actors': formatted_actors
     })
 
 
@@ -83,7 +83,8 @@ def create_new_actor():
     actor.insert()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actor': actor.format()
     })
 
 
@@ -104,7 +105,8 @@ def delete_actor(actor_id):
     actor.delete()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actorId': actor_id
     })
 
 
@@ -129,7 +131,8 @@ def update_actor(actor_id):
     actor.update()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actor': actor.format()
     })
 
 
@@ -151,7 +154,7 @@ def get_actor(actor_id):
 
     return jsonify({
         'success': True,
-        'data': formatted_actor
+        'actor': formatted_actor
     })
 
 
@@ -179,7 +182,7 @@ def get_all_movies():
 
     return jsonify({
         'success': True,
-        'data': formatted_movies
+        'movies': formatted_movies
     })
 
 
@@ -200,7 +203,8 @@ def create_new_movie():
     movie.insert()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'movie': movie.format()
     })
 
 
@@ -221,7 +225,8 @@ def delete_movie(movie_id):
     movie.delete()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'movieId': movie_id
     })
 
 
@@ -245,7 +250,8 @@ def update_movie(movie_id):
     movie.update()
 
     return jsonify({
-        'success': True
+        'success': True,
+        'movie': movie.format()
     })
 
 
@@ -267,7 +273,7 @@ def get_movie(movie_id):
 
     return jsonify({
         'success': True,
-        'data': formatted_movie
+        'movie': formatted_movie
     })
 
 
