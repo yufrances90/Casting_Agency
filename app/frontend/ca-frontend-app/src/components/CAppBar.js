@@ -13,7 +13,6 @@ import {
     AccountCircle, MovieSharp, RecentActorsSharp
 } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
-import purple from '@material-ui/core/colors/purple';
 
 import { Auth0Context } from '../contexts/auth0-context'; 
 
