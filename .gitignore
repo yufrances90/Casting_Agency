@@ -3,3 +3,4 @@ app/backend/env/*
 *.pyc
 app/backend/env.sh
 app/backend/env.sh
+app/frontend/ca-frontend-app/src/contexts/auth_config.json

@@ -1,6 +1,8 @@
 import React, { Component, createContext } from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
 
+import auth_config from './auth_config.json';
+
 // create the context
 export const Auth0Context = createContext();
 
@@ -15,8 +17,8 @@ export class Auth0Provider extends Component {
     };
 
     config = {
-        domain: 'francesyu90.auth0.com',
-        client_id: '9KEl7F1yEqU8eTkSIb0e9B6Im8EXSwFh',
+        domain: auth_config.domain,
+        client_id: auth_config.clientId,
         redirect_uri: window.location.origin
     };
 
