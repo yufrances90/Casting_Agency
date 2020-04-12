@@ -3,7 +3,8 @@ import {
     AppBar,
     Toolbar,
     Typography,
-    IconButton
+    IconButton,
+    Button
 } from '@material-ui/core';
 import {
     makeStyles
@@ -28,9 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CAppBar = () => {
 
-    const auth0 = useContext(Auth0Context);
-
-    console.log(auth0);
+    const { isLoading, user, loginWithRedirect } = useContext(Auth0Context);
 
     return (
         <AppBar position="static">
@@ -38,9 +37,11 @@ const CAppBar = () => {
                 <Typography variant="h6" className={useStyles().title}>
                     Casting Agency
                 </Typography>
-                <IconButton color="inherit" onClick={auth0.loginWithRedirect}>
-                    <AccountCircle />
-                </IconButton>
+                {!isLoading && !user && (
+                    <Button color="inherit" onClick={loginWithRedirect}>
+                        Log in
+                    </Button>
+                )}
             </Toolbar>
         </AppBar>
     );
