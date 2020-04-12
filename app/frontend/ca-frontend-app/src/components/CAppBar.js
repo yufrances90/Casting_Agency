@@ -10,14 +10,16 @@ import {
     makeStyles
 } from '@material-ui/core/styles';
 import {
-    AccountCircle
+    AccountCircle, MovieSharp, RecentActorsSharp
 } from '@material-ui/icons';
+import { NavLink } from 'react-router-dom';
+import purple from '@material-ui/core/colors/purple';
 
 import { Auth0Context } from '../contexts/auth0-context'; 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        flexGrow: 8
     },
     title: {
         flexGrow: 1
@@ -34,9 +36,25 @@ const CAppBar = () => {
     return (
         <AppBar position="static">
             <Toolbar style={{background: "black"}}>
-                <Typography variant="h6" className={useStyles().title}>
-                    Casting Agency
-                </Typography>
+                <NavLink to='/' exact className="app-link">
+                    <Typography variant="h6">
+                        Casting Agency
+                    </Typography>
+                </NavLink>
+                <span className={useStyles().root}>
+                    <NavLink to='/movies' className="app-link">
+                        <Button  style={{"color": "#834bff"}}>
+                            <MovieSharp />
+                            Movies
+                        </Button>
+                    </NavLink>
+                    <NavLink to='/actors' className="app-link">
+                        <Button  style={{"color": "#4dabf5"}}>
+                            <RecentActorsSharp />
+                            Actors
+                        </Button>
+                    </NavLink>
+                </span>
                 {!isLoading && !user && (
                     <Button color="inherit" onClick={loginWithRedirect}>
                         Log in
