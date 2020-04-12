@@ -19,7 +19,8 @@ export class Auth0Provider extends Component {
     config = {
         domain: auth_config.domain,
         client_id: auth_config.clientId,
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: auth_config.audience
     };
 
     componentDidMount() {

@@ -2,24 +2,27 @@ import React, { useContext, useEffect } from 'react';
 
 import { Auth0Context } from '../contexts/auth0-context'; 
 
+import auth_config from '../contexts/auth_config.json';
+
 
 const CAccessToken = () => {
 
-    const { isLoading, getIdTokenClaims } = useContext(Auth0Context);
+    const { isLoading, getTokenSilently } = useContext(Auth0Context);
     
     useEffect(() => {
 
         const callAPI = async () => {
 
-            const claims = await getIdTokenClaims();
+            const access_token = await getTokenSilently({
+                audience: auth_config.audience
+            });
 
-            const id_token = claims? claims['__raw'] : null;
-
-            localStorage.setItem('token', id_token)
-          };
-          if (!isLoading) {
+              localStorage.setItem('access_token', access_token)
+        };
+        
+        if (!isLoading) {
             callAPI();
-          }
+        }
     });
 
     return (
