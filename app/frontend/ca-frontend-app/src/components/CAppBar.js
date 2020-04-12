@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CAppBar = () => {
 
-    const { isLoading, user, loginWithRedirect } = useContext(Auth0Context);
+    const { isLoading, user, loginWithRedirect, logout } = useContext(Auth0Context);
 
     return (
         <AppBar position="static">
@@ -41,6 +41,14 @@ const CAppBar = () => {
                     <Button color="inherit" onClick={loginWithRedirect}>
                         Log in
                     </Button>
+                )}
+                {!isLoading && user && (
+                    <IconButton 
+                        color="inherit" 
+                        onClick={() => logout({ returnTo: window.location.origin })}
+                    >
+                        <AccountCircle />
+                    </IconButton>
                 )}
             </Toolbar>
         </AppBar>
