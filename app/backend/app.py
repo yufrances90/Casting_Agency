@@ -76,6 +76,7 @@ def delete_actor(actor_id):
         'actorId': delete_actor_by_id(actor_id)
     })
 
+
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
 def update_actor(actor_id):
 
@@ -181,6 +182,7 @@ def delete_shows():
 @app.errorhandler(404)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
+
 
 '''
 error handler for CastingAgencyError
