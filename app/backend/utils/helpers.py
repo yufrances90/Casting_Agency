@@ -12,6 +12,9 @@ from models import \
 from error import ErrorCodes, CastingAgencyError, ErrorMessages
 
 
+''' ACTORS '''
+
+
 def get_formatted_actor_with_movies(actor):
 
     formatted_actor = actor.format()
@@ -131,3 +134,23 @@ def get_gender_enum_value_by_string(genderStr):
 
 def get_formatted_movies(movies):
     return [movie.format() for movie in movies]
+
+''' MOVIES '''
+
+def get_formatted_movie_with_actors(movie):
+
+    actors = get_actors_by_movie(movie.id)
+
+    formatted_actors = [actor.format() for actor in actors]
+
+    formatted_movie = movie.format()
+
+    formatted_movie['actors'] = formatted_actors
+
+    return formatted_movie
+
+def get_formatted_movie_list():
+
+    movies = Movie.query.all()
+
+    return [get_formatted_movie_with_actors(movie) for movie in movies]

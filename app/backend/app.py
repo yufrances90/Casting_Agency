@@ -21,7 +21,8 @@ from utils.helpers import \
     save_actor, \
     delete_actor_by_id, \
     update_actor_by_id, \
-    get_actor_by_id
+    get_actor_by_id, \
+    get_formatted_movie_list
 
 
 app = Flask(__name__)
@@ -94,29 +95,13 @@ def get_actor(actor_id):
 ''' MOVIES '''
 
 
-# @app.route('/movies', methods=['GET'])
-# def get_all_movies():
+@app.route('/movies', methods=['GET'])
+def get_all_movies():
 
-#     movies = Movie.query.all()
-
-#     formatted_movies = []
-
-#     for movie in movies:
-
-#         actors = get_actors_by_movie(movie.id)
-
-#         formatted_actors = [actor.format() for actor in actors]
-
-#         formatted_movie = movie.format()
-
-#         formatted_movie['actors'] = formatted_actors
-
-#         formatted_movies.append(formatted_movie)
-
-#     return jsonify({
-#         'success': True,
-#         'movies': formatted_movies
-#     })
+    return jsonify({
+        'success': True,
+        'movies': get_formatted_movie_list()
+    })
 
 
 # @app.route('/movies', methods=['POST'])
