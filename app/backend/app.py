@@ -26,7 +26,9 @@ from utils.helpers import \
     save_movie, \
     delete_movie_by_id, \
     update_movie_by_id, \
-    get_movie_by_id
+    get_movie_by_id, \
+    add_new_show, \
+    delete_show
 
 
 app = Flask(__name__)
@@ -149,44 +151,28 @@ def get_movie(movie_id):
 ''' SHOWS '''
 
 
-# @app.route('/shows', methods=['POST'])
-# def save_new_show():
+@app.route('/shows', methods=['POST'])
+def save_new_show():
 
-#     request_data = json.loads(request.data)
+    request_data = json.loads(request.data)
 
-#     actor_id = request_data['actor_id']
-#     movie_id = request_data['movie_id']
+    add_new_show(request_data)
 
-#     show = get_show_by_movie_and_actor(movie_id, actor_id)
-
-#     if show is not None:
-#         return jsonify({
-#             'success': False,
-#             'msg': 'Cannot add new show due to existing shows'
-#         })
-
-#     show = Show(actor_id=actor_id, movie_id=movie_id)
-
-#     show.insert()
-
-#     return jsonify({
-#         'success': True
-#     })
+    return jsonify({
+        'success': True
+    })
 
 
-# @app.route('/shows', methods=['DELETE'])
-# def delete_shows():
+@app.route('/shows', methods=['DELETE'])
+def delete_shows():
 
-#     request_data = json.loads(request.data)
+    request_data = json.loads(request.data)
 
-#     actor_id = request_data['actor_id']
-#     movie_id = request_data['movie_id']
+    delete_show(request_data)
 
-#     delete_show(movie_id, actor_id)
-
-#     return jsonify({
-#         'success': True
-#     })
+    return jsonify({
+        'success': True
+    })
 
 
 ''' ERROR HANDLING '''

@@ -231,6 +231,37 @@ def stringToDate(stringDate):
     return datetime.datetime.strptime(stringDate, '%Y-%m-%d %H:%M:%S')
 
 
+''' SHOWS '''
+
+def add_new_show(request_data):
+
+    actor_id = request_data['actor_id']
+    movie_id = request_data['movie_id']
+
+    show = get_show_by_movie_and_actor(movie_id, actor_id)
+
+    if show is not None:
+
+        msg = f'{ErrorMessages.ERR_EXISTING_SHOW_FOUND.value} with movie id {movie_id} and actor id {actor_id}'
+
+        raise CastingAgencyError(
+            error_code = ErrorCodes.ERR_EXISTING_SHOW_FOUND.value,
+            message = msg,
+            status_code = 422
+        )
+
+    show = Show(actor_id=actor_id, movie_id=movie_id)
+
+    show.insert()
+
+def delete_show(request_data):
+
+    actor_id = request_data['actor_id']
+    movie_id = request_data['movie_id']
+
+    delete_show(movie_id, actor_id)
+
+
 ''' SHARED '''
 
 def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
@@ -238,5 +269,5 @@ def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
         raise CastingAgencyError(
             error_code = ErrorCodes.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
             message = ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
-            status_code = 409
+            status_code = 422
         )
