@@ -19,7 +19,8 @@ from error import CastingAgencyError
 from utils.helpers import \
     get_formatted_actor_list, \
     save_actor, \
-    delete_actor_by_id
+    delete_actor_by_id, \
+    update_actor_by_id
 
 
 app = Flask(__name__)
@@ -69,32 +70,15 @@ def delete_actor(actor_id):
         'actorId': deleted_actor_id
     })
 
+@app.route('/actors/<int:actor_id>', methods=['PATCH'])
+def update_actor(actor_id):
 
+    request_data = json.loads(request.data)
 
-# @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-# def update_actor(actor_id):
-
-#     actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-#     if actor is None:
-#         abort(404, description=f'No actor is found for id {actor_id}')
-
-#     request_data = json.loads(request.data)
-
-#     name = request_data['name']
-#     age = request_data['age']
-#     gender = Gender.female if request_data['gender'] == 'F' else Gender.male
-
-#     actor.name = name
-#     actor.age = age
-#     actor.gender = gender
-
-#     actor.update()
-
-#     return jsonify({
-#         'success': True,
-#         'actor': actor.format()
-#     })
+    return jsonify({
+        'success': True,
+        'actor': update_actor_by_id(actor_id, request_data)
+    })
 
 
 # @app.route('/actors/<int:actor_id>', methods=['GET'])
