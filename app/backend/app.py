@@ -14,17 +14,22 @@ from flask import \
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from models import \
-    setup_db, \
-    Actor, \
-    Movie, \
-    Gender, \
-    Show, \
-    get_actors_by_movie, \
-    get_movies_by_actor, \
-    check_if_movie_or_actor_is_bounded, \
-    delete_show, \
-    get_show_by_movie_and_actor
+from models import setup_db, Gender
+from error import CastingAgencyError
+from utils.helpers import \
+    get_formatted_actor_list, \
+    save_actor, \
+    delete_actor_by_id, \
+    update_actor_by_id, \
+    get_actor_by_id, \
+    get_formatted_movie_list, \
+    save_movie, \
+    delete_movie_by_id, \
+    update_movie_by_id, \
+    get_movie_by_id, \
+    add_new_show, \
+    delete_show
+from auth import requires_auth
 
 
 app = Flask(__name__)
@@ -45,113 +50,56 @@ def index():
 
 
 @app.route('/actors', methods=['GET'])
-def get_all_actors():
-
-    actors = Actor.query.all()
-
-    formatted_actors = []
-
-    for actor in actors:
-
-        formatted_actor = actor.format()
-
-        movies = get_movies_by_actor(actor.id)
-
-        formatted_movies = [movie.format() for movie in movies]
-
-        formatted_actor['movies'] = formatted_movies
-
-        formatted_actors.append(formatted_actor)
+@requires_auth(permission='get:actors')
+def get_all_actors(permission):
 
     return jsonify({
         'success': True,
-        'data': formatted_actors
+        'actors': get_formatted_actor_list()
     })
 
 
 @app.route('/actors', methods=['POST'])
-def create_new_actor():
+@requires_auth(permission='post:actors')
+def create_new_actor(permission):
 
     request_data = json.loads(request.data)
 
-    name = request_data['name']
-    age = request_data['age']
-    gender = Gender.female if request_data['gender'] == 'F' else Gender.male
-
-    actor = Actor(name=name, age=age, gender=gender)
-
-    actor.insert()
-
     return jsonify({
-        'success': True
+        'success': True,
+        'actor': save_actor(request_data)
     })
 
 
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-def delete_actor(actor_id):
-
-    if (check_if_movie_or_actor_is_bounded(actor_id=actor_id)):
-        return jsonify({
-            'success': False,
-            'msg': 'Cannot delete actor due to existing shows'
-        })
-
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-    if actor is None:
-        abort(404, description=f'No actor is found for id {actor_id}')
-
-    actor.delete()
+@requires_auth(permission='delete:actors')
+def delete_actor(permission, actor_id):
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actorId': delete_actor_by_id(actor_id)
     })
 
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-def update_actor(actor_id):
-
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-    if actor is None:
-        abort(404, description=f'No actor is found for id {actor_id}')
+@requires_auth('patch:actors')
+def update_actor(permission, actor_id):
 
     request_data = json.loads(request.data)
 
-    name = request_data['name']
-    age = request_data['age']
-    gender = Gender.female if request_data['gender'] == 'F' else Gender.male
-
-    actor.name = name
-    actor.age = age
-    actor.gender = gender
-
-    actor.update()
-
     return jsonify({
-        'success': True
+        'success': True,
+        'actor': update_actor_by_id(actor_id, request_data)
     })
 
 
 @app.route('/actors/<int:actor_id>', methods=['GET'])
-def get_actor(actor_id):
-
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-    if actor is None:
-        abort(404, description=f'No actor is found for id {actor_id}')
-
-    movies = get_movies_by_actor(actor_id)
-
-    formatted_movies = [movie.format() for movie in movies]
-
-    formatted_actor = actor.format()
-
-    formatted_actor['movies'] = formatted_movies
+@requires_auth('get:actors')
+def get_actor(permission, actor_id):
 
     return jsonify({
         'success': True,
-        'data': formatted_actor
+        'actor': get_actor_by_id(actor_id)
     })
 
 
@@ -159,115 +107,56 @@ def get_actor(actor_id):
 
 
 @app.route('/movies', methods=['GET'])
-def get_all_movies():
-
-    movies = Movie.query.all()
-
-    formatted_movies = []
-
-    for movie in movies:
-
-        actors = get_actors_by_movie(movie.id)
-
-        formatted_actors = [actor.format() for actor in actors]
-
-        formatted_movie = movie.format()
-
-        formatted_movie['actors'] = formatted_actors
-
-        formatted_movies.append(formatted_movie)
+@requires_auth(permission='get:movies')
+def get_all_movies(permission):
 
     return jsonify({
         'success': True,
-        'data': formatted_movies
+        'movies': get_formatted_movie_list()
     })
 
 
 @app.route('/movies', methods=['POST'])
-def create_new_movie():
+@requires_auth(permission='post:movies')
+def create_new_movie(permission):
 
     request_data = json.loads(request.data)
 
-    title = request_data['title']
-    release_date = request_data['release_date']
-
-    movie = Movie(
-        title=title,
-        release_date=datetime.datetime.strptime(
-            release_date, '%Y-%m-%d %H:%M:%S')
-    )
-
-    movie.insert()
-
     return jsonify({
-        'success': True
+        'success': True,
+        'movie': save_movie(request_data)
     })
 
 
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-def delete_movie(movie_id):
-
-    if (check_if_movie_or_actor_is_bounded(movie_id=movie_id)):
-        return jsonify({
-            'success': False,
-            'msg': 'Cannot delete movie due to existing shows'
-        })
-
-    movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-    if movie is None:
-        abort(404, description=f'No movie is found for id {movie_id}')
-
-    movie.delete()
+@requires_auth(permission='delete:movies')
+def delete_movie(permission, movie_id):
 
     return jsonify({
-        'success': True
+        'success': True,
+        'movieId': delete_movie_by_id(movie_id)
     })
 
 
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
-def update_movie(movie_id):
-
-    movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-    if movie is None:
-        abort(404, description=f'No movie is found for id {movie_id}')
+@requires_auth(permission='patch:movies')
+def update_movie(permission, movie_id):
 
     request_data = json.loads(request.data)
 
-    title = request_data['title']
-    release_date = request_data['release_date']
-
-    movie.title = title
-    movie.release_date = datetime.datetime.strptime(
-        release_date, '%Y-%m-%d %H:%M:%S')
-
-    movie.update()
-
     return jsonify({
-        'success': True
+        'success': True,
+        'movie': update_movie_by_id(movie_id, request_data)
     })
 
 
 @app.route('/movies/<int:movie_id>', methods=['GET'])
-def get_movie(movie_id):
-
-    movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-    if movie is None:
-        abort(404, description=f'No movie is found for id {movie_id}')
-
-    actors = get_actors_by_movie(movie_id)
-
-    formatted_actors = [actor.format() for actor in actors]
-
-    formatted_movie = movie.format()
-
-    formatted_movie['actors'] = formatted_actors
+@requires_auth(permission='get:movies')
+def get_movie(permission, movie_id):
 
     return jsonify({
         'success': True,
-        'data': formatted_movie
+        'movie': get_movie_by_id(movie_id)
     })
 
 
@@ -275,24 +164,13 @@ def get_movie(movie_id):
 
 
 @app.route('/shows', methods=['POST'])
+@requires_auth(permission='post:movies')
+@requires_auth(permission='post:actors')
 def save_new_show():
 
     request_data = json.loads(request.data)
 
-    actor_id = request_data['actor_id']
-    movie_id = request_data['movie_id']
-
-    show = get_show_by_movie_and_actor(movie_id, actor_id)
-
-    if show is not None:
-        return jsonify({
-            'success': False,
-            'msg': 'Cannot add new show due to existing shows'
-        })
-
-    show = Show(actor_id=actor_id, movie_id=movie_id)
-
-    show.insert()
+    add_new_show(request_data)
 
     return jsonify({
         'success': True
@@ -300,14 +178,13 @@ def save_new_show():
 
 
 @app.route('/shows', methods=['DELETE'])
+@requires_auth(permission='delete:movies')
+@requires_auth(permission='delete:actors')
 def delete_shows():
 
     request_data = json.loads(request.data)
 
-    actor_id = request_data['actor_id']
-    movie_id = request_data['movie_id']
-
-    delete_show(movie_id, actor_id)
+    delete_show(request_data)
 
     return jsonify({
         'success': True
@@ -320,6 +197,18 @@ def delete_shows():
 @app.errorhandler(404)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
+
+
+'''
+error handler for CastingAgencyError
+'''
+@app.errorhandler(CastingAgencyError)
+def auth_error(error):
+
+    return jsonify({
+        "success": False,
+        "message": f'{error.error_code}: {error.message}'
+    }), error.status_code
 
 
 if __name__ == "__main__":
