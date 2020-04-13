@@ -20,7 +20,8 @@ from utils.helpers import \
     get_formatted_actor_list, \
     save_actor, \
     delete_actor_by_id, \
-    update_actor_by_id
+    update_actor_by_id, \
+    get_actor_by_id
 
 
 app = Flask(__name__)
@@ -81,26 +82,13 @@ def update_actor(actor_id):
     })
 
 
-# @app.route('/actors/<int:actor_id>', methods=['GET'])
-# def get_actor(actor_id):
+@app.route('/actors/<int:actor_id>', methods=['GET'])
+def get_actor(actor_id):
 
-#     actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-#     if actor is None:
-#         abort(404, description=f'No actor is found for id {actor_id}')
-
-#     movies = get_movies_by_actor(actor_id)
-
-#     formatted_movies = [movie.format() for movie in movies]
-
-#     formatted_actor = actor.format()
-
-#     formatted_actor['movies'] = formatted_movies
-
-#     return jsonify({
-#         'success': True,
-#         'actor': formatted_actor
-#     })
+    return jsonify({
+        'success': True,
+        'actor': get_actor_by_id(actor_id)
+    })
 
 
 ''' MOVIES '''

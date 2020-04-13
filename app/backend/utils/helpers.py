@@ -36,9 +36,9 @@ def save_actor(request_data):
     actor_info = get_actor_info_from_request_data(request_data)
 
     actor = Actor(
-        name=actor_info.name, 
-        age=actor_info.age, 
-        gender=actor_info.gender
+        name=actor_info['name'], 
+        age=actor_info['age'], 
+        gender=actor_info['gender']
     )
 
     actor.insert()
@@ -72,25 +72,21 @@ def delete_actor_by_id(actor_id):
 
 def update_actor_by_id(actor_id, request_data):
 
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-    if actor is None:
-
-        msg = f'{ErrorMessages.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value} {actor_id}'
-
-        raise CastingAgencyError(
-            error_code=ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
-            message=msg,
-            status_code=400
-            )
+    actor = get_actor_by_actor_id(actor_id)
 
     actor_info = get_actor_info_from_request_data(request_data)
 
-    actor.name = actor_info.name
-    actor.age = actor_info.age
-    actor.gender = actor_info.gender
+    actor.name = actor_info['name']
+    actor.age = actor_info['age']
+    actor.gender = actor_info['gender']
 
     actor.update()
+
+    return get_formatted_actor_with_movies(actor)
+
+def get_actor_by_id(actor_id):
+
+    actor = get_actor_by_actor_id(actor_id)
 
     return get_formatted_actor_with_movies(actor)
 
@@ -114,8 +110,22 @@ def get_actor_info_from_request_data(request_data):
         'gender': gender
     }
 
-    
+def get_actor_by_actor_id(actor_id):
 
+    actor = Actor.query.filter_by(id=actor_id).one_or_none()
+
+    if actor is None:
+
+        msg = f'{ErrorMessages.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value} {actor_id}'
+
+        raise CastingAgencyError(
+            error_code=ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
+            message=msg,
+            status_code=404
+            )
+
+    return actor
+    
 def get_gender_enum_value_by_string(genderStr):
     return Gender.female if genderStr == 'F' else Gender.male
 
