@@ -17,7 +17,14 @@ class ErrorCodes(Enum):
     ERR_NO_MOVIE_INFO_PROVIDED_FOR_CREATION = 'CAE0004'
     ERR_NO_MOVIE_FOUND_BY_GIVEN_ID = 'CAE0005'
     ERR_EXISTING_SHOW_FOUND = 'CAE0006'
-
+    ERR_NO_HEADERS_FOUND = 'CAE0007'
+    ERR_MALFORMED_HEADER = 'CAE0008'
+    ERR_PERMISSIONS_NOT_INCLUDED = 'CAE0009'
+    ERR_UNAUTHORIZED_ACTION = 'CAE0010'
+    ERR_EXPIRED_TOKEN = 'CAE0011'
+    ERR_INVALID_CLAIMS = 'CAE0012'
+    ERR_FAILED_PARSING_AUTHENTICATION_TOKEN = 'CAE0013'
+    ERR_NO_APPROPRIATE_KEY_FOUND = 'CAE0014'
 
 class ErrorMessages(Enum):
     ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE = '''
@@ -32,3 +39,19 @@ class ErrorMessages(Enum):
     '''
     ERR_NO_MOVIE_FOUND_BY_GIVEN_ID = 'No movie is found for id'
     ERR_EXISTING_SHOW_FOUND = 'Existing show found'
+    ERR_NO_HEADERS_FOUND = 'No header is present'
+    ERR_MALFORMED_HEADER = 'The header is malformed'
+    ERR_PERMISSIONS_NOT_INCLUDED = ''' 
+        Permissions are not included in the payload 
+    '''
+    ERR_UNAUTHORIZED_ACTION = 'Action is not authorized'
+    ERR_EXPIRED_TOKEN = 'Token expired'
+    ERR_INVALID_CLAIMS= ''' 
+        Incorrect claims. Please, check the audience and issuer 
+    '''
+    ERR_FAILED_PARSING_AUTHENTICATION_TOKEN = ''' 
+        Unable to parse authentication token
+    '''
+    ERR_NO_APPROPRIATE_KEY_FOUND = '''
+        Unable to find the appropriate key
+    '''

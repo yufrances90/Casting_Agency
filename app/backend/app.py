@@ -29,6 +29,7 @@ from utils.helpers import \
     get_movie_by_id, \
     add_new_show, \
     delete_show
+from auth import requires_auth
 
 
 app = Flask(__name__)
@@ -49,7 +50,8 @@ def index():
 
 
 @app.route('/actors', methods=['GET'])
-def get_all_actors():
+@requires_auth(permission='get:actors')
+def get_all_actors(permission):
 
     return jsonify({
         'success': True,
@@ -58,7 +60,8 @@ def get_all_actors():
 
 
 @app.route('/actors', methods=['POST'])
-def create_new_actor():
+@requires_auth(permission='post:actors')
+def create_new_actor(permission):
 
     request_data = json.loads(request.data)
 
@@ -69,7 +72,8 @@ def create_new_actor():
 
 
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
-def delete_actor(actor_id):
+@requires_auth(permission='delete:actors')
+def delete_actor(permission, actor_id):
 
     return jsonify({
         'success': True,
@@ -78,7 +82,8 @@ def delete_actor(actor_id):
 
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-def update_actor(actor_id):
+@requires_auth('patch:actors')
+def update_actor(permission, actor_id):
 
     request_data = json.loads(request.data)
 
@@ -89,7 +94,8 @@ def update_actor(actor_id):
 
 
 @app.route('/actors/<int:actor_id>', methods=['GET'])
-def get_actor(actor_id):
+@requires_auth('get:actors')
+def get_actor(permission, actor_id):
 
     return jsonify({
         'success': True,
@@ -101,7 +107,8 @@ def get_actor(actor_id):
 
 
 @app.route('/movies', methods=['GET'])
-def get_all_movies():
+@requires_auth(permission='get:movies')
+def get_all_movies(permission):
 
     return jsonify({
         'success': True,
@@ -110,7 +117,8 @@ def get_all_movies():
 
 
 @app.route('/movies', methods=['POST'])
-def create_new_movie():
+@requires_auth(permission='post:movies')
+def create_new_movie(permission):
 
     request_data = json.loads(request.data)
 
@@ -121,7 +129,8 @@ def create_new_movie():
 
 
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-def delete_movie(movie_id):
+@requires_auth(permission='delete:movies')
+def delete_movie(permission, movie_id):
 
     return jsonify({
         'success': True,
@@ -130,7 +139,8 @@ def delete_movie(movie_id):
 
 
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
-def update_movie(movie_id):
+@requires_auth(permission='patch:movies')
+def update_movie(permission, movie_id):
 
     request_data = json.loads(request.data)
 
@@ -141,7 +151,8 @@ def update_movie(movie_id):
 
 
 @app.route('/movies/<int:movie_id>', methods=['GET'])
-def get_movie(movie_id):
+@requires_auth(permission='get:movies')
+def get_movie(permission, movie_id):
 
     return jsonify({
         'success': True,
@@ -153,6 +164,8 @@ def get_movie(movie_id):
 
 
 @app.route('/shows', methods=['POST'])
+@requires_auth(permission='post:movies')
+@requires_auth(permission='post:actors')
 def save_new_show():
 
     request_data = json.loads(request.data)
@@ -165,6 +178,8 @@ def save_new_show():
 
 
 @app.route('/shows', methods=['DELETE'])
+@requires_auth(permission='delete:movies')
+@requires_auth(permission='delete:actors')
 def delete_shows():
 
     request_data = json.loads(request.data)

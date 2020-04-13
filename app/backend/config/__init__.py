@@ -29,7 +29,7 @@ class DevConfig(Config):
     AUTH0_CLIENT_ID = os.getenv('AUTH0_CLIENT_ID')
     AUTH0_CLENT_SECRET = os.getenv('AUTH0_CLENT_SECRET')
     AUTH0_AUDIENCE = os.getenv('AUTH0_AUDIENCE')
-    ALGORITHMS = ['RS256']
+    ALGORITHMS = [os.getenv('AUTH0_ALGORITHM')]
 
     @staticmethod
     def configure_auth0(app):
@@ -49,3 +49,11 @@ class DevConfig(Config):
         )
 
         return auth0
+
+    @staticmethod
+    def get_auth0_credentials():
+        return {
+            'domain': DevConfig.AUTH0_DOMAIN_I,
+            'audience': DevConfig.AUTH0_AUDIENCE,
+            'algorithms': DevConfig.ALGORITHMS
+        }
