@@ -53,13 +53,9 @@ def create_new_actor():
 
     request_data = json.loads(request.data)
 
-    name = request_data['name']
-    age = request_data['age']
-    gender = Gender.female if request_data['gender'] == 'F' else Gender.male
-
     return jsonify({
         'success': True,
-        'actor': save_actor(name, age, gender)
+        'actor': save_actor(request_data)
     })
 
 
@@ -298,11 +294,9 @@ error handler for AuthError
 @app.errorhandler(CastingAgencyError)
 def auth_error(error):
 
-    print(error)
-
     return jsonify({
         "success": False,
-        "message": error.message
+        "message": f'{error.error_code}: {error.message}'
     }), error.status_code
 
 

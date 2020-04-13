@@ -31,7 +31,18 @@ def get_formatted_actor_list():
     return [get_formatted_actor_with_movies(actor) for actor in actors]
 
 
-def save_actor(name, age, gender):
+def save_actor(request_data):
+
+    if len(request_data) == 0:
+        raise CastingAgencyError(
+            error_code=ErrorCodes.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
+            message=ErrorMessages.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
+            status_code=400
+        )
+
+    name = request_data['name']
+    age = request_data['age']
+    gender = Gender.female if request_data['gender'] == 'F' else Gender.male
 
     actor = Actor(name=name, age=age, gender=gender)
 
