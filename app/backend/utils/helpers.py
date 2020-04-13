@@ -57,17 +57,7 @@ def delete_actor_by_id(actor_id):
         movie_id = None
     )
 
-    actor = Actor.query.filter_by(id=actor_id).one_or_none()
-
-    if actor is None:
-
-        msg = f'{ErrorMessages.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value} {actor_id}'
-
-        raise CastingAgencyError(
-            error_code = ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
-            message = msg,
-            status_code = 404
-        )
+    actor = get_actor_by_actor_id(actor_id)
 
     actor.delete()
 
@@ -175,6 +165,28 @@ def delete_movie_by_id(movie_id):
         movie_id = movie_id
     )
 
+    movie = get_movie_by_movie_id(movie_id)
+
+    movie.delete()
+
+    return movie_id
+
+def update_movie_by_id(movie_id, request_data):
+
+    movie = get_movie_by_movie_id(movie_id)
+
+    movie_info = get_movie_info_from_request_data(request_data)
+
+    movie.title = movie_info['title']
+    movie.release_date = movie_info['release_date']
+
+    movie.update()
+
+    return get_formatted_movie_with_actors(movie)
+    
+
+def get_movie_by_movie_id(movie_id):
+
     movie = Movie.query.filter_by(id=movie_id).one_or_none()
 
     if movie is None:
@@ -187,9 +199,7 @@ def delete_movie_by_id(movie_id):
             status_code = 404
         )
 
-    movie.delete()
-
-    return movie_id
+    return movie
 
 
 

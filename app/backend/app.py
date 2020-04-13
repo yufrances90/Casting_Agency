@@ -24,7 +24,8 @@ from utils.helpers import \
     get_actor_by_id, \
     get_formatted_movie_list, \
     save_movie, \
-    delete_movie_by_id
+    delete_movie_by_id, \
+    update_movie_by_id
 
 
 app = Flask(__name__)
@@ -124,29 +125,15 @@ def delete_movie(movie_id):
     })
 
 
-# @app.route('/movies/<int:movie_id>', methods=['PATCH'])
-# def update_movie(movie_id):
+@app.route('/movies/<int:movie_id>', methods=['PATCH'])
+def update_movie(movie_id):
 
-#     movie = Movie.query.filter_by(id=movie_id).one_or_none()
+    request_data = json.loads(request.data)
 
-#     if movie is None:
-#         abort(404, description=f'No movie is found for id {movie_id}')
-
-#     request_data = json.loads(request.data)
-
-#     title = request_data['title']
-#     release_date = request_data['release_date']
-
-#     movie.title = title
-#     movie.release_date = datetime.datetime.strptime(
-#         release_date, '%Y-%m-%d %H:%M:%S')
-
-#     movie.update()
-
-#     return jsonify({
-#         'success': True,
-#         'movie': movie.format()
-#     })
+    return jsonify({
+        'success': True,
+        'movie': update_movie_by_id(movie_id, request_data)
+    })
 
 
 # @app.route('/movies/<int:movie_id>', methods=['GET'])
