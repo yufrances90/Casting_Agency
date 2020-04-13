@@ -12,9 +12,11 @@ class CastingAgencyError(Exception):
 class ErrorCodes(Enum):
     ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE = 'CAE0001'
     ERR_NO_ACTOR_FOUND_BY_GIVEN_ID = 'CAE0002'
-    ERR_NO_ACTOR_PROVIDED_FOR_CREATION = 'CAE003'
+    ERR_NO_ACTOR_PROVIDED_FOR_CREATION = 'CAE0003'
+    ERR_NO_MOVIE_INFO_PROVIDED_FOR_CREATION = 'CAE0004'
 
 class ErrorMessages(Enum):
     ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE = 'Cannot delete actor due to existing shows'
     ERR_NO_ACTOR_FOUND_BY_GIVEN_ID = 'No actor is found for id'
-    ERR_NO_ACTOR_PROVIDED_FOR_CREATION = 'No actor info is provided for creation'
+    ERR_NO_ACTOR_PROVIDED_FOR_CREATION = 'No actor info is provided for creation or update'
+    ERR_NO_MOVIE_INFO_PROVIDED_FOR_CREATION = 'No movie info is provided for creation or update'

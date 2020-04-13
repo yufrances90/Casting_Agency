@@ -22,7 +22,8 @@ from utils.helpers import \
     delete_actor_by_id, \
     update_actor_by_id, \
     get_actor_by_id, \
-    get_formatted_movie_list
+    get_formatted_movie_list, \
+    save_movie
 
 
 app = Flask(__name__)
@@ -104,26 +105,15 @@ def get_all_movies():
     })
 
 
-# @app.route('/movies', methods=['POST'])
-# def create_new_movie():
+@app.route('/movies', methods=['POST'])
+def create_new_movie():
 
-#     request_data = json.loads(request.data)
+    request_data = json.loads(request.data)
 
-#     title = request_data['title']
-#     release_date = request_data['release_date']
-
-#     movie = Movie(
-#         title=title,
-#         release_date=datetime.datetime.strptime(
-#             release_date, '%Y-%m-%d %H:%M:%S')
-#     )
-
-#     movie.insert()
-
-#     return jsonify({
-#         'success': True,
-#         'movie': movie.format()
-#     })
+    return jsonify({
+        'success': True,
+        'movie': save_movie(request_data)
+    })
 
 
 # @app.route('/movies/<int:movie_id>', methods=['DELETE'])

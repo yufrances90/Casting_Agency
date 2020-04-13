@@ -1,3 +1,5 @@
+import datetime
+
 from models import \
     setup_db, \
     Actor, \
@@ -39,9 +41,9 @@ def save_actor(request_data):
     actor_info = get_actor_info_from_request_data(request_data)
 
     actor = Actor(
-        name=actor_info['name'], 
-        age=actor_info['age'], 
-        gender=actor_info['gender']
+        name = actor_info['name'], 
+        age = actor_info['age'], 
+        gender = actor_info['gender']
     )
 
     actor.insert()
@@ -52,9 +54,9 @@ def delete_actor_by_id(actor_id):
 
     if (check_if_movie_or_actor_is_bounded(actor_id=actor_id, movie_id=None)):
         raise CastingAgencyError(
-            error_code=ErrorCodes.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
-            message=ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
-            status_code=400
+            error_code = ErrorCodes.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
+            message = ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
+            status_code = 400
             )
 
     actor = Actor.query.filter_by(id=actor_id).one_or_none()
@@ -64,9 +66,9 @@ def delete_actor_by_id(actor_id):
         msg = f'{ErrorMessages.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value} {actor_id}'
 
         raise CastingAgencyError(
-            error_code=ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
-            message=msg,
-            status_code=400
+            error_code = ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
+            message = msg,
+            status_code = 400
             )
 
     actor.delete()
@@ -98,9 +100,9 @@ def get_actor_info_from_request_data(request_data):
 
     if len(request_data) == 0:
         raise CastingAgencyError(
-            error_code=ErrorCodes.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
-            message=ErrorMessages.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
-            status_code=400
+            error_code = ErrorCodes.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
+            message = ErrorMessages.ERR_NO_ACTOR_PROVIDED_FOR_CREATION.value,
+            status_code = 400
         )
 
     name = request_data['name']
@@ -154,3 +156,37 @@ def get_formatted_movie_list():
     movies = Movie.query.all()
 
     return [get_formatted_movie_with_actors(movie) for movie in movies]
+
+def save_movie(request_data):
+
+    movie_info = get_movie_info_from_request_data(request_data)
+
+    title = movie_info['title']
+    release_date = movie_info['release_date']
+
+    movie = Movie(title=title, release_date=release_date)
+
+    movie.insert()
+
+    return movie.format()
+
+def get_movie_info_from_request_data(request_data):
+
+    if len(request_data) == 0:
+        raise CastingAgencyError(
+            error_code = ErrorCodes.ERR_NO_MOVIE_INFO_PROVIDED_FOR_CREATION.value,
+            message = ErrorMessages.ERR_NO_MOVIE_INFO_PROVIDED_FOR_CREATION.value,
+            status_code = 400
+        )
+
+    title = request_data['title']
+    release_date = stringToDate(request_data['release_date'])
+
+    return {
+        'title': title,
+        'release_date': release_date
+    }
+
+
+def stringToDate(stringDate):
+    return datetime.datetime.strptime(stringDate, '%Y-%m-%d %H:%M:%S')
