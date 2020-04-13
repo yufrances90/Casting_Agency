@@ -52,12 +52,10 @@ def save_actor(request_data):
 
 def delete_actor_by_id(actor_id):
 
-    if (check_if_movie_or_actor_is_bounded(actor_id=actor_id, movie_id=None)):
-        raise CastingAgencyError(
-            error_code = ErrorCodes.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
-            message = ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
-            status_code = 400
-            )
+    raise_exception_if_link_btw_actor_and_movie_exists(
+        actor_id = actor_id, 
+        movie_id = None
+    )
 
     actor = Actor.query.filter_by(id=actor_id).one_or_none()
 
@@ -68,8 +66,8 @@ def delete_actor_by_id(actor_id):
         raise CastingAgencyError(
             error_code = ErrorCodes.ERR_NO_ACTOR_FOUND_BY_GIVEN_ID.value,
             message = msg,
-            status_code = 400
-            )
+            status_code = 404
+        )
 
     actor.delete()
 
@@ -170,6 +168,31 @@ def save_movie(request_data):
 
     return movie.format()
 
+def delete_movie_by_id(movie_id):
+
+    raise_exception_if_link_btw_actor_and_movie_exists(
+        actor_id = None, 
+        movie_id = movie_id
+    )
+
+    movie = Movie.query.filter_by(id=movie_id).one_or_none()
+
+    if movie is None:
+
+        msg = f'{ErrorMessages.ERR_NO_MOVIE_FOUND_BY_GIVEN_ID.value} {movie_id}'
+
+        raise CastingAgencyError(
+            error_code = ErrorCodes.ERR_NO_MOVIE_FOUND_BY_GIVEN_ID.value,
+            message = msg,
+            status_code = 404
+        )
+
+    movie.delete()
+
+    return movie_id
+
+
+
 def get_movie_info_from_request_data(request_data):
 
     if len(request_data) == 0:
@@ -190,3 +213,14 @@ def get_movie_info_from_request_data(request_data):
 
 def stringToDate(stringDate):
     return datetime.datetime.strptime(stringDate, '%Y-%m-%d %H:%M:%S')
+
+
+''' SHARED '''
+
+def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
+    if (check_if_movie_or_actor_is_bounded(actor_id=actor_id, movie_id=movie_id)):
+        raise CastingAgencyError(
+            error_code = ErrorCodes.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
+            message = ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
+            status_code = 409
+        )

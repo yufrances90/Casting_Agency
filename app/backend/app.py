@@ -23,7 +23,8 @@ from utils.helpers import \
     update_actor_by_id, \
     get_actor_by_id, \
     get_formatted_movie_list, \
-    save_movie
+    save_movie, \
+    delete_movie_by_id
 
 
 app = Flask(__name__)
@@ -66,11 +67,9 @@ def create_new_actor():
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 def delete_actor(actor_id):
 
-    deleted_actor_id = delete_actor_by_id(actor_id)
-
     return jsonify({
         'success': True,
-        'actorId': deleted_actor_id
+        'actorId': delete_actor_by_id(actor_id)
     })
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
@@ -116,26 +115,13 @@ def create_new_movie():
     })
 
 
-# @app.route('/movies/<int:movie_id>', methods=['DELETE'])
-# def delete_movie(movie_id):
+@app.route('/movies/<int:movie_id>', methods=['DELETE'])
+def delete_movie(movie_id):
 
-#     if (check_if_movie_or_actor_is_bounded(movie_id=movie_id)):
-#         return jsonify({
-#             'success': False,
-#             'msg': 'Cannot delete movie due to existing shows'
-#         })
-
-#     movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-#     if movie is None:
-#         abort(404, description=f'No movie is found for id {movie_id}')
-
-#     movie.delete()
-
-#     return jsonify({
-#         'success': True,
-#         'movieId': movie_id
-#     })
+    return jsonify({
+        'success': True,
+        'movieId': delete_movie_by_id(movie_id)
+    })
 
 
 # @app.route('/movies/<int:movie_id>', methods=['PATCH'])
@@ -236,7 +222,7 @@ def resource_not_found(e):
     return jsonify(error=str(e)), 404
 
 '''
-error handler for AuthError
+error handler for CastingAgencyError
 '''
 @app.errorhandler(CastingAgencyError)
 def auth_error(error):
