@@ -25,7 +25,8 @@ from utils.helpers import \
     get_formatted_movie_list, \
     save_movie, \
     delete_movie_by_id, \
-    update_movie_by_id
+    update_movie_by_id, \
+    get_movie_by_id
 
 
 app = Flask(__name__)
@@ -136,26 +137,13 @@ def update_movie(movie_id):
     })
 
 
-# @app.route('/movies/<int:movie_id>', methods=['GET'])
-# def get_movie(movie_id):
+@app.route('/movies/<int:movie_id>', methods=['GET'])
+def get_movie(movie_id):
 
-#     movie = Movie.query.filter_by(id=movie_id).one_or_none()
-
-#     if movie is None:
-#         abort(404, description=f'No movie is found for id {movie_id}')
-
-#     actors = get_actors_by_movie(movie_id)
-
-#     formatted_actors = [actor.format() for actor in actors]
-
-#     formatted_movie = movie.format()
-
-#     formatted_movie['actors'] = formatted_actors
-
-#     return jsonify({
-#         'success': True,
-#         'movie': formatted_movie
-#     })
+    return jsonify({
+        'success': True,
+        'movie': get_movie_by_id(movie_id)
+    })
 
 
 ''' SHOWS '''

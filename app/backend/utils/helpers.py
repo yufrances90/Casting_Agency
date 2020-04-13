@@ -183,7 +183,13 @@ def update_movie_by_id(movie_id, request_data):
     movie.update()
 
     return get_formatted_movie_with_actors(movie)
-    
+
+def get_movie_by_id(movie_id):
+
+    movie = get_movie_by_movie_id(movie_id)
+
+    return get_formatted_movie_with_actors(movie)
+
 
 def get_movie_by_movie_id(movie_id):
 
