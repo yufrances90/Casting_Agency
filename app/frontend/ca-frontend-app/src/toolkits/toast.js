@@ -1,11 +1,21 @@
-import { Message } from 'element-react';
+import { Notification } from 'element-react';
+
+import 'element-theme-default';
 
 const toast = {
     error: (message, title = 'Error') => {
-        return Message.error(message);
+        return Notification.error({
+            title,
+            message,
+            duration: 0
+        });
     },
     success: (message, title = 'Success') => {
-        return Notification.success(message);
+        return Notification({
+            title,
+            message,
+            type: 'success'
+          });
     }
 };
 

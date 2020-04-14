@@ -6,3 +6,9 @@ ul {
     text-decoration: none;
     color: inherit;
 }
+
+.main {
+    margin-left: 2em;
+    margin-top: 2em;
+    margin-right: 2em;
+}
