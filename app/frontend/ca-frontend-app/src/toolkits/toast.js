@@ -1,20 +1,11 @@
-import 'izitoast/dist/css/iziToast.min.css'
-import iZtoast from 'izitoast'
+import { Message } from 'element-react';
 
 const toast = {
     error: (message, title = 'Error') => {
-        return iZtoast.show({
-            title: title,
-            message: message,
-            position: 'topCenter'
-        });
+        return Message.error(message);
     },
     success: (message, title = 'Success') => {
-        return iZtoast.success({
-            title: title,
-            message: message,
-            position: 'bottomCenter'
-        });
+        return Notification.success(message);
     }
 };
 
