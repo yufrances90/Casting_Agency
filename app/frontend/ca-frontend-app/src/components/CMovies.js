@@ -7,6 +7,7 @@ import {
 import QueueIcon from '@material-ui/icons/Queue';
 
 import CNewMovieDialog from './CNewMovieDialog';
+import CMovieGridList from './CMovieGridList';
 
 class CMovies extends Component {
 
@@ -21,7 +22,8 @@ class CMovies extends Component {
             handleFormSubmission,
             handleAddNewMovieButtonClick,
             handleCloseNewMovieDialog,
-            toCreateMovie
+            toCreateMovie,
+            movies
         } = this.props;
 
         return (
@@ -49,8 +51,14 @@ class CMovies extends Component {
                             handleFormSubmission={handleFormSubmission}
                         />
                     </Grid>
-                    <Grid item xs={9}>
-                        Movie List
+                    <Grid item xs={12}>
+                        {
+                            movies.list.length > 0 && (
+                                <CMovieGridList 
+                                    movieList={movies.list}
+                                />
+                            )
+                        }
                     </Grid>
                 </Grid>
             </div>
