@@ -36,11 +36,13 @@ class Movie(db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String(200), nullable=False)
     release_date = Column(DateTime)
+    image_link = Column(String(500), nullable=False)
     shows = db.relationship('Show', backref='movie', lazy=True)
 
-    def __init__(self, title, release_date):
+    def __init__(self, title, release_date, image_link):
         self.title = title
         self.release_date = release_date
+        self.image_link = image_link
 
     def insert(self):
         db.session.add(self)
@@ -57,7 +59,8 @@ class Movie(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'release_date': self.release_date
+            'release_date': self.release_date,
+            'image_link': self.image_link
         }
 
 
@@ -67,12 +70,14 @@ class Actor(db.Model):
     name = Column(String(200), nullable=False)
     age = Column(Integer, nullable=True)
     gender = Column(Enum(Gender))
+    image_link = Column(String(500), nullable=False)
     shows = db.relationship('Show', backref='actor', lazy=True)
 
-    def __init__(self, name, age, gender):
+    def __init__(self, name, age, gender, image_link):
         self.name = name
         self.age = age
         self.gender = gender
+        self.image_link = image_link
 
     def insert(self):
         db.session.add(self)
@@ -90,7 +95,8 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender.value
+            'gender': self.gender.value,
+            'image_link': self.image_link
         }
 
 

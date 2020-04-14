@@ -44,7 +44,8 @@ def save_actor(request_data):
     actor = Actor(
         name=actor_info['name'],
         age=actor_info['age'],
-        gender=actor_info['gender']
+        gender=actor_info['gender'],
+        image_link=actor_info['image_link']
     )
 
     actor.insert()
@@ -75,6 +76,7 @@ def update_actor_by_id(actor_id, request_data):
     actor.name = actor_info['name']
     actor.age = actor_info['age']
     actor.gender = actor_info['gender']
+    actor.image_link = actor_info['image_link']
 
     actor.update()
 
@@ -100,11 +102,13 @@ def get_actor_info_from_request_data(request_data):
     name = request_data['name']
     age = request_data['age']
     gender = get_gender_enum_value_by_string(request_data['gender'])
+    image_link = request_data['image_link']
 
     return {
         'name': name,
         'age': age,
-        'gender': gender
+        'gender': gender,
+        'image_link': image_link
     }
 
 
@@ -165,8 +169,9 @@ def save_movie(request_data):
 
     title = movie_info['title']
     release_date = movie_info['release_date']
+    image_link = movie_info['image_link']
 
-    movie = Movie(title=title, release_date=release_date)
+    movie = Movie(title=title, release_date=release_date, image_link=image_link)
 
     movie.insert()
 
@@ -195,6 +200,7 @@ def update_movie_by_id(movie_id, request_data):
 
     movie.title = movie_info['title']
     movie.release_date = movie_info['release_date']
+    movie.image_link = movie_info['image_link']
 
     movie.update()
 
@@ -241,10 +247,12 @@ def get_movie_info_from_request_data(request_data):
 
     title = request_data['title']
     release_date = stringToDate(request_data['release_date'])
+    image_link = request_data['image_link']
 
     return {
         'title': title,
-        'release_date': release_date
+        'release_date': release_date,
+        'image_link': image_link
     }
 
 
