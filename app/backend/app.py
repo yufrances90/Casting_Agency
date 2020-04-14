@@ -166,6 +166,8 @@ def get_movie(permission, movie_id):
 @app.route('/shows', methods=['POST'])
 @requires_auth(permission='post:movies')
 @requires_auth(permission='post:actors')
+@requires_auth(permission='get:movies')
+@requires_auth(permission='get:actors')
 def save_new_show():
 
     request_data = json.loads(request.data)
@@ -173,13 +175,17 @@ def save_new_show():
     add_new_show(request_data)
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actors': get_formatted_actor_list(),
+        'movies': get_formatted_movie_list()
     })
 
 
 @app.route('/shows', methods=['DELETE'])
 @requires_auth(permission='delete:movies')
 @requires_auth(permission='delete:actors')
+@requires_auth(permission='get:movies')
+@requires_auth(permission='get:actors')
 def delete_shows():
 
     request_data = json.loads(request.data)
@@ -187,7 +193,9 @@ def delete_shows():
     delete_show(request_data)
 
     return jsonify({
-        'success': True
+        'success': True,
+        'actors': get_formatted_actor_list(),
+        'movies': get_formatted_movie_list()
     })
 
 

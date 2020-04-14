@@ -67,7 +67,10 @@ export class Auth0Provider extends Component {
                 loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
                 getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
                 getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
-                logout: (...p) => auth0Client.logout(...p) 
+                logout: (...p) => {
+                    auth0Client.logout(...p);
+                    localStorage.removeItem("access_token");
+                } 
         };
 
         return (

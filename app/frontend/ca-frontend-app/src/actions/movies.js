@@ -8,10 +8,10 @@ const addMovieAction = (movie) => {
     };
 }
 
-const removeMovieAction = (id) => {
+const removeMovieAction = (movieId) => {
     return {
         type: actionContants.UPDATE_MOVIE,
-        id
+        movieId
     };
 }
 
@@ -36,45 +36,54 @@ const getMovieDetailsAction = (movie) => {
     };
 }
 
-const handleGetAllMovies = () => {
+const emptyMovieListAction = (movies) => {
+    return {
+        type: actionContants.EMPTY_MOVIE_LIST,
+        movies
+    }
+}
+
+export const handleGetAllMovies = () => {
     return (dispatch) => {
         return MoviesAPI.getAllMovies()
-        .then(res => dispatch(getAllMoviesAction(res.movies)));
+        .then(res => {
+            if (res && res.data) {
+                dispatch(getAllMoviesAction(res.data.movies))
+            }
+        });
     };
 }
 
-const handleGetMovieDetails = (movieId) => {
+export const handleClearMovieList = () => {
+    return (dispatch) => {
+        dispatch(emptyMovieListAction([]))
+    };
+}
+
+export const handleGetMovieDetails = (movieId) => {
     return (dispatch) => {
         return MoviesAPI.getMovieDetails(movieId)
-        .then(res => dispatch(getMovieDetailsAction(res.movie)));
+        .then(res => dispatch(getMovieDetailsAction(res.data.movie)));
     };
 }
 
-const handleSaveMovie = (movie) => {
+export const handleSaveMovie = (movie) => {
     return (dispatch) => {
         return MoviesAPI.saveNewMovie(movie)
-        .then(res => dispatch(addMovieAction(res.movie)));
+        .then(res => dispatch(addMovieAction(res.data.movie)));
     };
 }
 
-const handleUpdateMovie = (movieId, movie) => {
+export const handleUpdateMovie = (movieId, movie) => {
     return (dispatch) => {
         return MoviesAPI.updateMovie(movieId, movie)
-        .then(res => dispatch(updateMovieAction(res.movie)));
+        .then(res => dispatch(updateMovieAction(res.data.movie)));
     };
 }
 
-const handleDeleteMovie = (movieId) => {
+export const handleDeleteMovie = (movieId) => {
     return (dispatch) => {
         return MoviesAPI.deleteMovie(movieId)
-        .then(res => dispatch(removeMovieAction(res.movieId)));
+        .then(res => dispatch(removeMovieAction(res.data.movieId)));
     };
-}
-
-export default {
-    handleGetAllMovies,
-    handleGetMovieDetails,
-    handleSaveMovie,
-    handleUpdateMovie,
-    handleDeleteMovie
 }

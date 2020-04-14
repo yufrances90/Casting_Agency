@@ -8,10 +8,10 @@ const addActorAction = (actor) => {
     }
 }
 
-const removeActorAction = (id) => {
+const removeActorAction = (actorId) => {
     return {
         type: actionContants.DELETE_ACTOR,
-        id
+        actorId
     }
 }
 

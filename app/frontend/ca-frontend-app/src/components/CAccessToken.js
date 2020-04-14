@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 
 import { Auth0Context } from '../contexts/auth0-context'; 
 
+import toast from '../toolkits/toast';
+
 import auth_config from '../contexts/auth_config.json';
 
 
@@ -11,18 +13,20 @@ const CAccessToken = () => {
     
     useEffect(() => {
 
-        const callAPI = async () => {
+        const callAPI = () => {
 
-            const access_token = await getTokenSilently({
+            getTokenSilently({
                 audience: auth_config.audience
+            }).then(access_token => {
+                localStorage.setItem('access_token', access_token);
+            }).catch(err => {
+                toast.error(err.error_description);
             });
-
-              localStorage.setItem('access_token', access_token)
         };
         
         if (!isLoading) {
             callAPI();
-        }
+        } 
     });
 
     return (
