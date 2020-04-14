@@ -4,7 +4,8 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Button
+    Button,
+    LinearProgress
 } from '@material-ui/core';
 import {
     makeStyles
