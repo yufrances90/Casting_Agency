@@ -4,7 +4,8 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Button
+    Button,
+    LinearProgress
 } from '@material-ui/core';
 import {
     makeStyles
@@ -30,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CAppBar = () => {
 
+    const styles = useStyles();
+
     const { isLoading, user, loginWithRedirect, logout } = useContext(Auth0Context);
 
     return (
@@ -40,7 +43,7 @@ const CAppBar = () => {
                         Casting Agency
                     </Typography>
                 </NavLink>
-                <span className={useStyles().root}>
+                <span className={styles.root}>
                     <NavLink to='/movies' className="app-link">
                         <Button  style={{"color": "#834bff"}}>
                             <MovieSharp />
