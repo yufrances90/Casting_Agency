@@ -68,9 +68,12 @@ export const handleGetMovieDetails = (movieId) => {
 }
 
 export const handleSaveMovie = (movie) => {
+
     return (dispatch) => {
         return MoviesAPI.saveNewMovie(movie)
-        .then(res => dispatch(addMovieAction(res.data.movie)));
+        .then(res => {
+            dispatch(addMovieAction(res.data.movie))
+        });
     };
 }
 

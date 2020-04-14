@@ -257,7 +257,7 @@ def get_movie_info_from_request_data(request_data):
 
 
 def stringToDate(stringDate):
-    return datetime.datetime.strptime(stringDate, '%Y-%m-%d %H:%M:%S')
+    return datetime.datetime.strptime(stringDate, '%Y-%m-%d')
 
 
 ''' SHOWS '''
