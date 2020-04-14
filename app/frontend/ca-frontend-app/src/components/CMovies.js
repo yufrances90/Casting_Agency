@@ -8,6 +8,7 @@ import QueueIcon from '@material-ui/icons/Queue';
 
 import CNewMovieDialog from './CNewMovieDialog';
 import CMovieGridList from './CMovieGridList';
+import CMovieTable from './CMovieTable';
 
 class CMovies extends Component {
 
@@ -55,6 +56,15 @@ class CMovies extends Component {
                         {
                             movies.list.length > 0 && (
                                 <CMovieGridList 
+                                    movieList={movies.list}
+                                />
+                            )
+                        }
+                    </Grid>
+                    <Grid item xs={12}>
+                        {
+                            movies.list.length > 0 && (
+                                <CMovieTable
                                     movieList={movies.list}
                                 />
                             )
