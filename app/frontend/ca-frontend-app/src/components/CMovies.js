@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import CNewMovieDialog from './CNewMovieDialog';
+import CMovieDialog from './CMovieDialog';
 import CMovieGridList from './CMovieGridList';
 import CMovieTable from './CMovieTable';
 
@@ -32,7 +32,7 @@ class CMovies extends Component {
         return (
             <div className="main">
                 <Grid container spacing={2}> 
-                    <Grid item xs={12}>
+                    <Grid item xs={11}>
                         {
                             movies.list.length > 0 && (
                                 <CMovieGridList 
@@ -40,6 +40,31 @@ class CMovies extends Component {
                                 />
                             )
                         }
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Fab  
+                            style={{
+                                backgroundColor: "#ffffff",
+                                color: "#000000",
+                                WebkitBoxShadow: 'none',
+                                MozBoxShadow: 'none',
+                                boxShadow: 'none'
+                            }}
+                            onClick={handleAddNewMovieButtonClick}
+                        >
+                            <QueueIcon />
+                        </Fab>
+                        <CMovieDialog 
+                            toOpenDialog={toCreateMovie}
+                            handleCloseNewMovieDialog={handleCloseNewMovieDialog}
+                            handleDateChange={handleDateChange}
+                            releasedDate={releasedDate}
+                            imageLink={imageLink}
+                            movieName={movieName}
+                            handleValueChanage={handleValueChanage}
+                            handleFormSubmission={handleFormSubmission}
+                            dialogTitle="Create New Movie"
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         {
@@ -50,29 +75,6 @@ class CMovies extends Component {
                                 />
                             )
                         }
-                    </Grid>
-                    <Grid item xs={10}>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Fab  
-                            style={{
-                                backgroundColor: "#000000",
-                                color: "#ffffff"
-                            }}
-                            onClick={handleAddNewMovieButtonClick}
-                        >
-                            <QueueIcon />
-                        </Fab>
-                        <CNewMovieDialog 
-                            toOpenDialog={toCreateMovie}
-                            handleCloseNewMovieDialog={handleCloseNewMovieDialog}
-                            handleDateChange={handleDateChange}
-                            releasedDate={releasedDate}
-                            imageLink={imageLink}
-                            movieName={movieName}
-                            handleValueChanage={handleValueChanage}
-                            handleFormSubmission={handleFormSubmission}
-                        />
                     </Grid>
                 </Grid>
             </div>
