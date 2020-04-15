@@ -38,3 +38,7 @@ ul {
     font-family:  Open Sans sans-serif !important; 
     text-transform: uppercase;
 }
+
+.movie-card-button-group {
+    float: right !important;
+}

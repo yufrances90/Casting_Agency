@@ -7,7 +7,9 @@ import {
     CardActionArea,
     Typography,
     CardActions,
-    Button
+    Button,
+    Grid,
+    IconButton
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
@@ -24,6 +26,14 @@ class CMovieCard extends Component {
                 maxHeight: 100
             },
         });
+    }
+
+    handleEditButtonClick(movieId) {
+        alert(movieId);
+    }
+
+    handleDeleteButtonClick(movieId) {
+        this.props.removeMovieById(movieId);
     }
 
     render() {
@@ -52,14 +62,24 @@ class CMovieCard extends Component {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary">
-                        <EditIcon />
-                        Edit
-                    </Button>
-                    <Button size="small" color="secondary">
-                        <DeleteIcon />
-                        Delete
-                    </Button>
+                    <Grid container justify="space-between">
+                        <Grid item>
+                        </Grid>
+                        <Grid item>
+                            <IconButton 
+                                color="secondary"
+                                onClick={e => this.handleDeleteButtonClick(movie.id)}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton 
+                                color="primary"
+                                onClick={e => this.handleEditButtonClick(movie.id)}
+                            >
+                                <EditIcon />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
                 </CardActions>
             </Card>
         );

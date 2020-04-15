@@ -5,12 +5,13 @@ class CMovie extends Component {
 
     render() {
 
-        const { movie } = this.props;
+        const { movie, removeMovieById } = this.props;
 
         return (
             <div>
                 <CMovieCard 
                     movie={movie}
+                    removeMovieById={removeMovieById}
                 />
             </div>
         );

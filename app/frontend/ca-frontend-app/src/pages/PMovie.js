@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import CMovie from '../components/CMovie';
 
 import { 
-    handleGetMovieDetails
+    handleGetMovieDetails,
+    handleDeleteMovie,
+    handleUpdateMovie
 } from '../actions/movies';
 
 
@@ -16,6 +18,13 @@ class PMovie extends Component {
         const { movieId } = this.props.location.state;
 
         this.props.dispatch(handleGetMovieDetails(movieId));
+    }
+
+    removeMovieById(movieId) {
+
+        this.props.dispatch(handleDeleteMovie(movieId));
+        
+        this.props.history.goBack();
     }
 
     render() {
@@ -32,6 +41,7 @@ class PMovie extends Component {
             <div className="main">
                 <CMovie 
                     movie={movie}
+                    removeMovieById={this.removeMovieById.bind(this)}
                 />
             </div>
         );
