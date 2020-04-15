@@ -90,6 +90,26 @@ class PMovie extends Component {
         this.props.dispatch(handleGetMovieDetails(movieId));
     }
 
+    setDefaultValue() {
+
+        const { movie } = this.props;
+
+        const { release_date, title, image_link } = movie;
+
+        this.setState({
+            releasedDate: release_date,
+            movieName: title,
+            imageLink: image_link
+        });
+    }
+
+    componentDidUpdate(prevProps) {
+
+        if (this.props.movie !== prevProps.movie) {
+            this.setDefaultValue();
+        }
+    }
+
     render() {
 
         const { movie } = this.props;
