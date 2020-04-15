@@ -47,7 +47,12 @@ const CMovieTable = (props) => {
                                 </TableCell>
                                 <TableCell align="left">
                                     <Link
-                                        to="/"
+                                        to={{
+                                            pathname: "/movie",
+                                            state: {
+                                                movieId: movie.id
+                                            }
+                                        }}
                                         className="app-link"
                                     >
                                         {movie.title}
