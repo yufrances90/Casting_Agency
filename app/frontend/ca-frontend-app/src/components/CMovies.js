@@ -32,7 +32,7 @@ class CMovies extends Component {
         return (
             <div className="main">
                 <Grid container spacing={2}> 
-                    <Grid item xs={12}>
+                    <Grid item xs={11}>
                         {
                             movies.list.length > 0 && (
                                 <CMovieGridList 
@@ -41,23 +41,14 @@ class CMovies extends Component {
                             )
                         }
                     </Grid>
-                    <Grid item xs={12}>
-                        {
-                            movies.list.length > 0 && (
-                                <CMovieTable
-                                    movieList={movies.list}
-                                    handleDeleteMovie={handleDeleteMovie}
-                                />
-                            )
-                        }
-                    </Grid>
-                    <Grid item xs={10}>
-                    </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={1}>
                         <Fab  
                             style={{
-                                backgroundColor: "#000000",
-                                color: "#ffffff"
+                                backgroundColor: "#ffffff",
+                                color: "#000000",
+                                '-webkit-box-shadow': 'none',
+                                '-moz-box-shadow': 'none',
+                                'box-shadow': 'none'
                             }}
                             onClick={handleAddNewMovieButtonClick}
                         >
@@ -73,6 +64,16 @@ class CMovies extends Component {
                             handleValueChanage={handleValueChanage}
                             handleFormSubmission={handleFormSubmission}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        {
+                            movies.list.length > 0 && (
+                                <CMovieTable
+                                    movieList={movies.list}
+                                    handleDeleteMovie={handleDeleteMovie}
+                                />
+                            )
+                        }
                     </Grid>
                 </Grid>
             </div>
