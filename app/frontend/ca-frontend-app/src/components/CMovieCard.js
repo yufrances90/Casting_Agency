@@ -29,7 +29,7 @@ class CMovieCard extends Component {
     }
 
     handleEditButtonClick(movieId) {
-        alert(movieId);
+        this.props.handleAddNewMovieButtonClick();
     }
 
     handleDeleteButtonClick(movieId) {

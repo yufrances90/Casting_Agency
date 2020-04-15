@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import QueueIcon from '@material-ui/icons/Queue';
 
-import CNewMovieDialog from './CNewMovieDialog';
+import CMovieDialog from './CMovieDialog';
 import CMovieGridList from './CMovieGridList';
 import CMovieTable from './CMovieTable';
 
@@ -54,7 +54,7 @@ class CMovies extends Component {
                         >
                             <QueueIcon />
                         </Fab>
-                        <CNewMovieDialog 
+                        <CMovieDialog 
                             toOpenDialog={toCreateMovie}
                             handleCloseNewMovieDialog={handleCloseNewMovieDialog}
                             handleDateChange={handleDateChange}
@@ -63,6 +63,7 @@ class CMovies extends Component {
                             movieName={movieName}
                             handleValueChanage={handleValueChanage}
                             handleFormSubmission={handleFormSubmission}
+                            dialogTitle="Create New Movie"
                         />
                     </Grid>
                     <Grid item xs={12}>

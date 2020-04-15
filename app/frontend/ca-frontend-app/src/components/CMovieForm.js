@@ -7,7 +7,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-class CNewMovieForm extends Component {
+class CMovieForm extends Component {
 
     handleValueChange(event) {
         this.props.handleValueChanage(event.target.name, event.target.value);
@@ -69,4 +69,4 @@ class CNewMovieForm extends Component {
     }
 }
 
-export default CNewMovieForm;
+export default CMovieForm;

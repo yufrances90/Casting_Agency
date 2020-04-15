@@ -7,9 +7,9 @@ import {
     DialogContent
 } from '@material-ui/core';
 
-import CNewMovieForm from './CNewMovieForm';
+import CMovieForm from './CMovieForm';
 
-class CNewMovieDialog extends Component {
+class CMovieDialog extends Component {
 
     render() {
 
@@ -21,7 +21,8 @@ class CNewMovieDialog extends Component {
             imageLink,
             handleDateChange,
             handleValueChanage,
-            handleFormSubmission
+            handleFormSubmission,
+            dialogTitle
         } = this.props;
 
         return (
@@ -30,10 +31,10 @@ class CNewMovieDialog extends Component {
                 onClose={handleCloseNewMovieDialog}
             >
                 <DialogTitle>
-                    Create New Movie
+                    {dialogTitle}
                 </DialogTitle>
                 <DialogContent>
-                    <CNewMovieForm 
+                    <CMovieForm 
                         handleDateChange={handleDateChange}
                         releasedDate={releasedDate}
                         imageLink={imageLink}
@@ -54,4 +55,4 @@ class CNewMovieDialog extends Component {
     }
 }
 
-export default CNewMovieDialog
+export default CMovieDialog;
