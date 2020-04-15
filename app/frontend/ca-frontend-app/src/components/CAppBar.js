@@ -39,7 +39,7 @@ const CAppBar = () => {
         <AppBar position="static">
             <Toolbar style={{background: "black"}}>
                 <NavLink to='/' exact className="app-link">
-                    <Typography variant="h6">
+                    <Typography variant="h6" className="appbar-title">
                         Casting Agency
                     </Typography>
                 </NavLink>

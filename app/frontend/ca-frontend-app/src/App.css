@@ -30,5 +30,11 @@ ul {
     right: 0px;
     margin-bottom: 0px;
     text-align: center;
-    font-family: Nunito sans-serif !important;; 
+    font-family: Montserrat sans-serif !important; 
+    text-transform: uppercase;
+}
+
+.appbar-title {
+    font-family:  Open Sans sans-serif !important; 
+    text-transform: uppercase;
 }

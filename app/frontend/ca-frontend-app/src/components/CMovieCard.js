@@ -37,7 +37,7 @@ class CMovieCard extends Component {
                 <CardActionArea>
                     <CardMedia
                         component="img"
-                        alt="Contemplative Reptile"
+                        alt={movie.title}
                         height="400"
                         image={movie.image_link}
                         title={movie.title}
