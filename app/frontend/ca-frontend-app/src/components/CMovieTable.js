@@ -9,11 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
-    },
+    }
 });
 
 const CMovieTable = (props) => {
@@ -45,7 +46,12 @@ const CMovieTable = (props) => {
                                     {movie.id}
                                 </TableCell>
                                 <TableCell align="left">
-                                    {movie.title}
+                                    <Link
+                                        to="/"
+                                        className="app-link"
+                                    >
+                                        {movie.title}
+                                    </Link>
                                 </TableCell>
                                 <TableCell align="left">
                                     {movie.release_date}

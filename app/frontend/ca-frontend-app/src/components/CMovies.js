@@ -46,9 +46,9 @@ class CMovies extends Component {
                             style={{
                                 backgroundColor: "#ffffff",
                                 color: "#000000",
-                                '-webkit-box-shadow': 'none',
-                                '-moz-box-shadow': 'none',
-                                'box-shadow': 'none'
+                                WebkitBoxShadow: 'none',
+                                MozBoxShadow: 'none',
+                                boxShadow: 'none'
                             }}
                             onClick={handleAddNewMovieButtonClick}
                         >
