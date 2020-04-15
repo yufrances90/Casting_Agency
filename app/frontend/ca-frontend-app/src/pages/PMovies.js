@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import CMovies from '../components/CMovies';
 
-import { handleGetAllMovies, handleSaveMovie } from '../actions/movies';
+import { 
+    handleGetAllMovies, 
+    handleSaveMovie,
+    handleDeleteMovie 
+} from '../actions/movies';
 
 class PMovies extends Component {
 
@@ -37,6 +41,10 @@ class PMovies extends Component {
         this.setState({
             [key]: value
         });
+    }
+
+    handleDeleteMovie(movieId) {
+        this.props.dispatch(handleDeleteMovie(movieId));
     }
 
     handleFormSubmission() {
@@ -87,6 +95,7 @@ class PMovies extends Component {
                 toCreateMovie={toCreateMovie}
                 handleAddNewMovieButtonClick={this.handleAddNewMovieButtonClick.bind(this)}
                 handleCloseNewMovieDialog={this.handleCloseNewMovieDialog.bind(this)}
+                handleDeleteMovie={this.handleDeleteMovie.bind(this)}
             />
         );
     }

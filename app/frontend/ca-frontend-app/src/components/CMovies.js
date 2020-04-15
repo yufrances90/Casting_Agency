@@ -25,7 +25,8 @@ class CMovies extends Component {
             handleAddNewMovieButtonClick,
             handleCloseNewMovieDialog,
             toCreateMovie,
-            movies
+            movies,
+            handleDeleteMovie
         } = this.props;
 
         return (
@@ -45,6 +46,7 @@ class CMovies extends Component {
                             movies.list.length > 0 && (
                                 <CMovieTable
                                     movieList={movies.list}
+                                    handleDeleteMovie={handleDeleteMovie}
                                 />
                             )
                         }

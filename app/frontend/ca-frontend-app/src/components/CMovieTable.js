@@ -7,6 +7,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
     table: {
@@ -17,6 +19,10 @@ const useStyles = makeStyles({
 const CMovieTable = (props) => {
 
     const classes = useStyles();
+
+    const handleDeleteButtonClick = (movieId) => {
+        props.handleDeleteMovie(movieId);
+    }
 
     const { movieList } = props;
 
@@ -43,6 +49,14 @@ const CMovieTable = (props) => {
                                 </TableCell>
                                 <TableCell align="left">
                                     {movie.release_date}
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton 
+                                        color="secondary"
+                                        onClick={e => handleDeleteButtonClick(movie.id)}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))

@@ -10,7 +10,7 @@ const addMovieAction = (movie) => {
 
 const removeMovieAction = (movieId) => {
     return {
-        type: actionContants.UPDATE_MOVIE,
+        type: actionContants.DELETE_MOVIE,
         movieId
     };
 }
