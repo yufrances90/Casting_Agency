@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import {
     Grid,
-    Button,
     Fab
 } from '@material-ui/core';
 import QueueIcon from '@material-ui/icons/Queue';
@@ -10,6 +9,8 @@ import QueueIcon from '@material-ui/icons/Queue';
 import CMovieDialog from './CMovieDialog';
 import CMovieGridList from './CMovieGridList';
 import CMovieTable from './CMovieTable';
+
+import { checkPermisson } from '../utils/helpers';
 
 class CMovies extends Component {
 
@@ -42,18 +43,20 @@ class CMovies extends Component {
                         }
                     </Grid>
                     <Grid item xs={1}>
-                        <Fab  
-                            style={{
-                                backgroundColor: "#ffffff",
-                                color: "#000000",
-                                WebkitBoxShadow: 'none',
-                                MozBoxShadow: 'none',
-                                boxShadow: 'none'
-                            }}
-                            onClick={handleAddNewMovieButtonClick}
-                        >
-                            <QueueIcon />
-                        </Fab>
+                        {checkPermisson("post:movies") && (
+                            <Fab  
+                                style={{
+                                    backgroundColor: "#ffffff",
+                                    color: "#000000",
+                                    WebkitBoxShadow: 'none',
+                                    MozBoxShadow: 'none',
+                                    boxShadow: 'none'
+                                }}
+                                onClick={handleAddNewMovieButtonClick}
+                            >
+                                <QueueIcon />
+                            </Fab>
+                        )}
                         <CMovieDialog 
                             toOpenDialog={toCreateMovie}
                             handleCloseNewMovieDialog={handleCloseNewMovieDialog}

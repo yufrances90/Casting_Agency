@@ -15,6 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import { checkPermisson } from '../utils/helpers';
+
 class CMovieCard extends Component {
 
     useStyles() {
@@ -66,18 +68,24 @@ class CMovieCard extends Component {
                         <Grid item>
                         </Grid>
                         <Grid item>
-                            <IconButton 
-                                color="secondary"
-                                onClick={e => this.handleDeleteButtonClick(movie.id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton 
-                                color="primary"
-                                onClick={e => this.handleEditButtonClick(movie.id)}
-                            >
-                                <EditIcon />
-                            </IconButton>
+                            {
+                                checkPermisson("delete:movies") && 
+                                <IconButton 
+                                    color="secondary"
+                                    onClick={e => this.handleDeleteButtonClick(movie.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            }
+                            {
+                                checkPermisson("patch:movies") && 
+                                <IconButton 
+                                    color="primary"
+                                    onClick={e => this.handleEditButtonClick(movie.id)}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                            }
                         </Grid>
                     </Grid>
                 </CardActions>
