@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import CActors from '../components/CActors';
+
+import {
+    handleGetAllActors,
+    handleSaveActor
+} from '../actions/actors';
 
 class PACtors extends Component {
 
@@ -41,14 +48,18 @@ class PACtors extends Component {
 
         const actor = {
             name: actorName,
-            age,
+            age: parseInt(age),
             'image_link': imageLink,
             gender
         };
 
-        console.log(actor);
+        this.props.dispatch(handleSaveActor(actor));
 
         this.closeActorDialog();
+    }
+
+    componentDidMount() {
+        this.props.dispatch(handleGetAllActors());
     }
 
     render() {
@@ -77,4 +88,12 @@ class PACtors extends Component {
     }
 }
 
-export default PACtors;
+function mapStateToProps({ actors, movies }) {
+
+    return {
+        actors,
+        movies
+    }
+}
+
+export default connect(mapStateToProps)(PACtors);

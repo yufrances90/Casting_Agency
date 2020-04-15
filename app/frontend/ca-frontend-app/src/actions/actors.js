@@ -36,45 +36,37 @@ const getActorDetailsAction = (actor) => {
     };
 }
 
-const handleGetAllActors = () => {
+export const handleGetAllActors = () => {
     return (dispatch) => {
         return ActorsAPI.getAllActors()
-        .then(res => dispatch(getAllActorsAction(res.actors)));
+        .then(res => dispatch(getAllActorsAction(res.data.actors)));
     };
 }
 
-const handleGetActorDetails = (actorId) => {
+export const handleGetActorDetails = (actorId) => {
     return (dispatch) => {
         return ActorsAPI.getActorDetails(actorId)
-        .then(res => dispatch(getActorDetailsAction(res.actor)))
+        .then(res => dispatch(getActorDetailsAction(res.data.actor)))
     }
 }
 
-const handleSaveActor = (actor) => {
+export const handleSaveActor = (actor) => {
     return (dispatch) => {
         return ActorsAPI.saveNewActor(actor)
-        .then(res => dispatch(addActorAction(res.actor)));
+        .then(res => dispatch(addActorAction(res.data.actor)));
     };
 }
 
-const handleUpdateActor = (actorId, actor) => {
+export const handleUpdateActor = (actorId, actor) => {
     return (dispatch) => {
         return ActorsAPI.updateActor(actorId, actor)
-        .then(res => dispatch(updateActorAction(res.actor)));
+        .then(res => dispatch(updateActorAction(res.data.actor)));
     };
 }
 
-const handleDeleteActor = (actorId) => {
+export const handleDeleteActor = (actorId) => {
     return (dispatch) => {
         return ActorsAPI.deleteActor(actorId)
-        .then(res => dispatch(removeActorAction(res.actorId)));
+        .then(res => dispatch(removeActorAction(res.data.actorId)));
     };
 }
- 
-export default {
-    handleGetAllActors,
-    handleGetActorDetails,
-    handleSaveActor,
-    handleUpdateActor,
-    handleDeleteActor
-};
