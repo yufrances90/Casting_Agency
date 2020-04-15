@@ -7,6 +7,7 @@ import PMovies from './pages/PMovies';
 import PActors from './pages/PActors';
 import ProtectedRoute from './pages/ProtectedRoute';
 import PMovie from './pages/PMovie';
+import CFooter from './components/CFooter';
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
                 <ProtectedRoute path="/movies" component={PMovies} />
                 <ProtectedRoute path="/movie" component={PMovie} />
             </Switch>
+            <CFooter />
         </div>
     );
 }

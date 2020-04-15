@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-
+import { LinearProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
+
+import CMovie from '../components/CMovie';
 
 import { 
     handleGetMovieDetails
 } from '../actions/movies';
-import { LinearProgress } from '@material-ui/core';
+
 
 class PMovie extends Component {
 
@@ -27,8 +29,10 @@ class PMovie extends Component {
         }
 
         return (
-            <div>
-                {JSON.stringify(movie)}
+            <div className="main">
+                <CMovie 
+                    movie={movie}
+                />
             </div>
         );
     }
