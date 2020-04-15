@@ -24,12 +24,14 @@ const CActors = (props) => {
     return (
         <div className="main">
             <Grid container>
+                <Grid item xs={1}>
+                </Grid>
                 <Grid item xs={10}>
                     <CActorGridList
                         actorList={actorList} 
                     />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                     <Fab
                         onClick={openActorDialog}
                         style={{
