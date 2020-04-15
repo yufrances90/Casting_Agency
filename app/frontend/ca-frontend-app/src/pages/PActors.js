@@ -55,7 +55,19 @@ class PACtors extends Component {
 
         this.props.dispatch(handleSaveActor(actor));
 
+        this.resetForm();
+
         this.closeActorDialog();
+    }
+
+    resetForm() {
+        this.setState({
+            actorName: "",
+            age: 0,
+            imageLink: "",
+            gender: "",
+            toOpenDialog: false
+        });
     }
 
     componentDidMount() {
@@ -72,6 +84,8 @@ class PACtors extends Component {
             toOpenDialog
         } = this.state;
 
+        const { actors } = this.props;
+
         return (
             <CActors 
                 actorName={actorName}
@@ -83,6 +97,7 @@ class PACtors extends Component {
                 openActorDialog={this.openActorDialog.bind(this)}
                 closeActorDialog={this.closeActorDialog.bind(this)}
                 handleSubmitForm={this.handleSubmitForm.bind(this)}
+                actorList={actors.list}
             />
         );
     }

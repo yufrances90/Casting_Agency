@@ -4,6 +4,7 @@ import { Fab, Grid } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import CActorDialog from './CActorDialog';
+import CActorGridList from './CActorGridList';
 
 const CActors = (props) => {
 
@@ -16,13 +17,17 @@ const CActors = (props) => {
         toOpenDialog,
         openActorDialog,
         closeActorDialog,
-        handleSubmitForm
+        handleSubmitForm,
+        actorList
     } = props;
 
     return (
         <div className="main">
             <Grid container>
                 <Grid item xs={10}>
+                    <CActorGridList
+                        actorList={actorList} 
+                    />
                 </Grid>
                 <Grid item xs={2}>
                     <Fab
