@@ -25,6 +25,8 @@ class ErrorCodes(Enum):
     ERR_INVALID_CLAIMS = 'CAE0012'
     ERR_FAILED_PARSING_AUTHENTICATION_TOKEN = 'CAE0013'
     ERR_NO_APPROPRIATE_KEY_FOUND = 'CAE0014'
+    ERR_NO_CAST_TEAM_INFO_PROVIDED = 'CAE0015'
+    ERR_NO_REQUEST_DATA_PROVIDED = 'CAE0016'
 
 class ErrorMessages(Enum):
     ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE = '''
@@ -55,3 +57,7 @@ class ErrorMessages(Enum):
     ERR_NO_APPROPRIATE_KEY_FOUND = '''
         Unable to find the appropriate key
     '''
+    ERR_NO_CAST_TEAM_INFO_PROVIDED = '''
+        No cast team info is provided
+    '''
+    ERR_NO_REQUEST_DATA_PROVIDED = 'No request data is provided'

@@ -30,7 +30,8 @@ from utils.helpers import \
     add_new_show, \
     delete_show, \
     get_actors_by_movie_id, \
-    get_formatted_movie_only_list
+    get_formatted_movie_only_list, \
+    update_cast_team_by_movie_id
 from auth import requires_auth
 
 
@@ -190,7 +191,7 @@ def get_movie(permission, movie_id):
 
 
 @app.route('/shows', methods=['POST'])
-@requires_auth(permission='post:actors')
+@requires_auth(permission='post:movies')
 def save_new_show(permission):
 
     request_data = json.loads(request.data)
@@ -205,12 +206,27 @@ def save_new_show(permission):
 
 
 @app.route('/shows', methods=['DELETE'])
-@requires_auth(permission='delete:actors')
+@requires_auth(permission='delete:movies')
 def delete_shows(permission):
 
     request_data = json.loads(request.data)
 
     delete_show(request_data)
+
+    return jsonify({
+        'success': True,
+        'actors': get_formatted_actor_list(),
+        'movies': get_formatted_movie_list()
+    })
+
+
+@app.route('/movies/<int:movie_id>/actors', methods=['PUT'])
+@requires_auth(permission='patch:movies')
+def update_cast_team_by_movie(movie_id):
+
+    request_data = json.loads(request.data)
+
+    update_cast_team_by_movie_id(movie_id, request_data)
 
     return jsonify({
         'success': True,

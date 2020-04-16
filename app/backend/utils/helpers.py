@@ -10,7 +10,10 @@ from models import \
     get_movies_by_actor, \
     check_if_movie_or_actor_is_bounded, \
     delete_show, \
-    get_show_by_movie_and_actor
+    get_show_by_movie_and_actor, \
+    get_actor_ids_by_movie, \
+    remove_actor_id_by_movie, \
+    save_new_shows
 from error import ErrorCodes, CastingAgencyError, ErrorMessages
 
 
@@ -329,3 +332,38 @@ def get_actors_by_movie_id(movie_id):
     actors = get_actors_by_movie(movie_id)
 
     return [actor.format() for actor in actors]
+
+
+def update_cast_team_by_movie_id(movie_id, request_data):
+
+    saved_actors = get_actors_by_movie(movie_id)
+
+    saved_actor_ids = set([actor.id for actor in saved_actors])
+
+    actor_id_str = request_data.get('actor_ids', '')
+
+    if (len(request_data) == 0):
+        raise CastingAgencyError(
+            error_code=ErrorCodes.ERR_NO_REQUEST_DATA_PROVIDED.value,
+            message=ErrorMessages.ERR_NO_REQUEST_DATA_PROVIDED.value,
+            status_code=400
+            )
+
+    actor_ids_str_arr = actor_id_str.split(',') if len(actor_id_str) > 0 \
+        else []
+
+    actor_ids = set([int(actor_id) for actor_id in actor_ids_str_arr])
+
+    new_actor_ids = actor_ids - saved_actor_ids
+
+    actor_id_to_remove = saved_actor_ids - actor_ids
+
+    remove_actor_id_by_movie(movie_id, actor_id_to_remove)
+
+    new_shows = []
+
+    for actor_id in new_actor_ids:
+
+        new_shows.append(Show(actor_id=actor_id, movie_id=movie_id))
+
+    save_new_shows(new_shows)
