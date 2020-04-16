@@ -61,7 +61,7 @@ const CAppBar = () => {
                     <NavLink to='/shows' className="app-link">
                         <Button  style={{"color": "#4ee041"}}>
                             <SlideshowSharpIcon />
-                            Shows
+                            Catalog
                         </Button>
                     </NavLink>
 
