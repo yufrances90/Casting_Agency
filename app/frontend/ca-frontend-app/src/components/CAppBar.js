@@ -4,15 +4,17 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Button,
-    LinearProgress
+    Button
 } from '@material-ui/core';
 import {
     makeStyles
 } from '@material-ui/core/styles';
 import {
-    AccountCircle, MovieSharp, RecentActorsSharp
+    AccountCircle, 
+    MovieSharp, 
+    RecentActorsSharp
 } from '@material-ui/icons';
+import SlideshowSharpIcon from '@material-ui/icons/SlideshowSharp';
 import { NavLink } from 'react-router-dom';
 
 import { Auth0Context } from '../contexts/auth0-context'; 
@@ -45,7 +47,7 @@ const CAppBar = () => {
                 </NavLink>
                 <span className={styles.root}>
                     <NavLink to='/movies' className="app-link">
-                        <Button  style={{"color": "#834bff"}}>
+                        <Button  style={{"color": "#f54242"}}>
                             <MovieSharp />
                             Movies
                         </Button>
@@ -56,6 +58,14 @@ const CAppBar = () => {
                             Actors
                         </Button>
                     </NavLink>
+                    <NavLink to='/shows' className="app-link">
+                        <Button  style={{"color": "#4ee041"}}>
+                            <SlideshowSharpIcon />
+                            Shows
+                        </Button>
+                    </NavLink>
+
+                    
                 </span>
                 {!isLoading && !user && (
                     <Button color="inherit" onClick={loginWithRedirect}>
