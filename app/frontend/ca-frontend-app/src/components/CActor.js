@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-    Grid
+    Grid, LinearProgress
 } from '@material-ui/core';
 
 import CActorCard from './CActorCard';
@@ -21,6 +21,10 @@ const CActor = (props) => {
         changeValue,
         handleUpdateActorById
     } = props;
+
+    if (!actor || !gender) {
+        return <LinearProgress />
+    }
      
     return (
         <div className="main">

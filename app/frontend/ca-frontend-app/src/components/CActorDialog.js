@@ -22,7 +22,8 @@ class CActorDialog extends Component {
             changeValue,
             actorName,
             age,
-            imageLink
+            imageLink,
+            gender
         } = this.props;
 
         return (
@@ -38,6 +39,7 @@ class CActorDialog extends Component {
                         actorName={actorName}
                         age={age}
                         imageLink={imageLink}
+                        gender={gender}
                     />
                 </DialogContent>
                 <DialogActions>

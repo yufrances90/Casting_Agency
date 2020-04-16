@@ -95,8 +95,6 @@ class PACtors extends Component {
 
         const { actors } = this.props;
 
-        console.log(this.props);
-
         return (
             <CActors 
                 actorName={actorName}

@@ -61,6 +61,20 @@ class PActor extends Component {
         });
     }
 
+    setDefaultValue() {
+
+        const { actor } = this.props;
+
+        const { name, age, gender, image_link } = actor;
+
+        this.setState({
+            actorName: name,
+            age,
+            gender,
+            imageLink: image_link
+        });
+    }
+
     componentDidMount() {
 
         const { actorId } = this.props.location.state;
@@ -70,6 +84,12 @@ class PActor extends Component {
         });
 
         this.props.dispatch(handleGetActorDetails(actorId));
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.actor !== prevProps.actor) {
+            this.setDefaultValue();
+        }
     }
 
     render() {
