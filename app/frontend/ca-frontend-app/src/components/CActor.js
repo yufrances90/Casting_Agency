@@ -5,12 +5,21 @@ import {
 } from '@material-ui/core';
 
 import CActorCard from './CActorCard';
+import CActorDialog from './CActorDialog';
 
 const CActor = (props) => {
 
     const { 
         actor, 
-        handleDeleteActorById 
+        handleDeleteActorById,
+        toOpenDialog,
+        closeActorDialog,
+        actorName, 
+        age, 
+        imageLink, 
+        gender,
+        changeValue,
+        handleUpdateActorById
     } = props;
      
     return (
@@ -22,9 +31,20 @@ const CActor = (props) => {
                     <CActorCard 
                         actor={actor}
                         handleDeleteActorById={handleDeleteActorById}
+                        toggleDialog={closeActorDialog}
                     />
                 </Grid>
             </Grid>
+            <CActorDialog 
+                toOpenDialog={toOpenDialog}
+                closeActorDialog={closeActorDialog}
+                actorName={actorName}
+                age={age}
+                imageLink={imageLink}
+                gender={gender}
+                changeValue={changeValue}
+                handleSubmitForm={handleUpdateActorById}
+            />
         </div>
     );
     

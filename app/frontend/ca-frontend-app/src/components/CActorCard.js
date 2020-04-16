@@ -38,7 +38,11 @@ class CActorCard extends Component {
 
         const classes = this.useStyles();
 
-        const { actor, handleDeleteActorById } = this.props;
+        const { 
+            actor, 
+            handleDeleteActorById,
+            toggleDialog 
+        } = this.props;
 
         if (!actor) {
             return <LinearProgress />
@@ -55,33 +59,32 @@ class CActorCard extends Component {
                         title={actor.name}
                     />
                     <CardContent>
-                        <Grid container justify="space-between">
-                            <Grid item xs={1}>
-                            </Grid>
-                            <Grid item xs={8}>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {actor.name}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    Age: { actor.age } Gender: { this.formatGender(actor.gender) }
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <IconButton
-                                    color="secondary"
-                                    onClick={e => handleDeleteActorById(actor.id)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton
-                                    color="primary"
-                                >
-                                    <EditIcon />
-                                </IconButton>
-                            </Grid>
-                        </Grid>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {actor.name}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Age: { actor.age } Gender: { this.formatGender(actor.gender) }
+                        </Typography>
                     </CardContent>
                 </CardActionArea>
+                <CardActions>
+                    <Grid item xs={10}>
+                        </Grid>
+                    <Grid item xs={2}>
+                        <IconButton
+                            color="secondary"
+                            onClick={e => handleDeleteActorById(actor.id)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton
+                            color="primary"
+                            onClick={e => toggleDialog()}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                    </Grid>
+                </CardActions>
             </Card>
         );
     }

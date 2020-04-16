@@ -12,7 +12,12 @@ import CActor from '../components/CActor';
 class PActor extends Component {
 
     state = {
-        actorId: null
+        actorId: null,
+        toOpenDialog: false,
+        actorName: "",
+        gender: "",
+        imageLink: "",
+        age: 0
     }
 
     handleDeleteActorById(actorId) {
@@ -20,6 +25,40 @@ class PActor extends Component {
         this.props.dispatch(handleDeleteActor(actorId));
 
         this.props.history.goBack();
+    }
+
+    handleUpdateActorById() {
+
+        const {
+            actorName,
+            gender,
+            imageLink,
+            age,
+            actorId,
+        } = this.state;
+
+        const updatedActor = {
+            name: actorName,
+            age: parseInt(age),
+            'image_link': imageLink,
+            gender
+        };
+
+        this.props.dispatch(handleUpdateActor(actorId, updatedActor));
+
+        this.toggleDialog();
+    }
+
+    toggleDialog() {
+        this.setState((prevState) => ({
+            toOpenDialog: !prevState.toOpenDialog
+        }));
+    }
+
+    changeValue(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     componentDidMount() {
@@ -37,10 +76,20 @@ class PActor extends Component {
 
         const { actor } = this.props;
 
+        const { toOpenDialog, actorName, age, imageLink, gender } = this.state;
+
         return (
             <CActor 
                 actor={actor}
                 handleDeleteActorById={this.handleDeleteActorById.bind(this)}
+                toOpenDialog={toOpenDialog}
+                closeActorDialog={this.toggleDialog.bind(this)}
+                actorName={actorName}
+                age={age}
+                imageLink={imageLink}
+                gender={gender}
+                changeValue={this.changeValue.bind(this)}
+                handleUpdateActorById={this.handleUpdateActorById.bind(this)}
             />
         );
     }
