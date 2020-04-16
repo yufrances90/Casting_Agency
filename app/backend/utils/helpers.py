@@ -163,6 +163,13 @@ def get_formatted_movie_list():
     return [get_formatted_movie_with_actors(movie) for movie in movies]
 
 
+def get_formatted_movie_only_list():
+
+    movies = Movie.query.all()
+
+    return [movie.format() for movie in movies]
+
+
 def save_movie(request_data):
 
     movie_info = get_movie_info_from_request_data(request_data)
@@ -171,7 +178,11 @@ def save_movie(request_data):
     release_date = movie_info['release_date']
     image_link = movie_info['image_link']
 
-    movie = Movie(title=title, release_date=release_date, image_link=image_link)
+    movie = Movie(
+        title=title,
+        release_date=release_date,
+        image_link=image_link
+    )
 
     movie.insert()
 
@@ -311,6 +322,7 @@ def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
             message=ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
             status_code=422
             )
+
 
 def get_actors_by_movie_id(movie_id):
 

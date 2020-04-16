@@ -29,7 +29,8 @@ from utils.helpers import \
     get_movie_by_id, \
     add_new_show, \
     delete_show, \
-    get_actors_by_movie_id
+    get_actors_by_movie_id, \
+    get_formatted_movie_only_list
 from auth import requires_auth
 
 
@@ -38,10 +39,15 @@ app.config.from_object('config.DevConfig')
 setup_db(app)
 CORS(app)
 
+
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add(
+        'Access-Control-Allow-Headers', 'Content-Type,Authorization,true'
+    )
+    response.headers.add(
+        'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
+    )
     return response
 
 
@@ -127,9 +133,12 @@ def get_actors_by_movie(permission, movie_id):
 @requires_auth(permission='get:movies')
 def get_all_movies(permission):
 
+    is_actors_only = request.args.get("isMovieOnly") == 'true'
+
     return jsonify({
         'success': True,
-        'movies': get_formatted_movie_list()
+        'movies': get_formatted_movie_only_list() if is_actors_only
+        else get_formatted_movie_list()
     })
 
 
