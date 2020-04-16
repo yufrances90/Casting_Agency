@@ -74,6 +74,15 @@ class PACtors extends Component {
         this.props.dispatch(handleGetAllActors());
     }
 
+    navigateToActorDetailsPage(actorId) {
+        this.props.history.push({
+            pathname: "/actor",
+            state: {
+                actorId
+            }
+        });
+    }
+
     render() {
 
         const {
@@ -85,6 +94,8 @@ class PACtors extends Component {
         } = this.state;
 
         const { actors } = this.props;
+
+        console.log(this.props);
 
         return (
             <CActors 
@@ -98,6 +109,7 @@ class PACtors extends Component {
                 closeActorDialog={this.closeActorDialog.bind(this)}
                 handleSubmitForm={this.handleSubmitForm.bind(this)}
                 actorList={actors.list}
+                navigateToActorDetailsPage={this.navigateToActorDetailsPage.bind(this)}
             />
         );
     }

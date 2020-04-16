@@ -18,7 +18,8 @@ const CActors = (props) => {
         openActorDialog,
         closeActorDialog,
         handleSubmitForm,
-        actorList
+        actorList,
+        navigateToActorDetailsPage
     } = props;
 
     return (
@@ -29,6 +30,7 @@ const CActors = (props) => {
                 <Grid item xs={10}>
                     <CActorGridList
                         actorList={actorList} 
+                        navigateToActorDetailsPage={navigateToActorDetailsPage}
                     />
                 </Grid>
                 <Grid item xs={1}>

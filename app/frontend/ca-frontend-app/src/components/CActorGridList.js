@@ -29,7 +29,7 @@ const CActorGridList = (props) => {
 
     const classes = useStyles();
 
-    const { actorList } = props;
+    const { actorList, navigateToActorDetailsPage } = props;
 
     return (
         <GridList cellHeight={400} className={classes.gridList} cols={10}>
@@ -46,7 +46,10 @@ const CActorGridList = (props) => {
                           title: classes.title,
                         }}
                         actionIcon={
-                          <IconButton aria-label={`star ${actor.name}`}>
+                            <IconButton 
+                                aria-label={`star ${actor.name}`}
+                                onClick={e => navigateToActorDetailsPage(actor.id)}
+                            >          
                                 <MoreVertIcon className={classes.title} />
                           </IconButton>
                         }
