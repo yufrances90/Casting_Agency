@@ -311,3 +311,9 @@ def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
             message=ErrorMessages.ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE.value,
             status_code=422
             )
+
+def get_actors_by_movie_id(movie_id):
+
+    actors = get_actors_by_movie(movie_id)
+
+    return [actor.format() for actor in actors]
