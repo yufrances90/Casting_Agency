@@ -222,7 +222,7 @@ def delete_shows(permission):
 
 @app.route('/movies/<int:movie_id>/actors', methods=['PUT'])
 @requires_auth(permission='patch:movies')
-def update_cast_team_by_movie(movie_id):
+def update_cast_team_by_movie(permission, movie_id):
 
     request_data = json.loads(request.data)
 
