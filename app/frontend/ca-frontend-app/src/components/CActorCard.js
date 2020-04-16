@@ -38,7 +38,7 @@ class CActorCard extends Component {
 
         const classes = this.useStyles();
 
-        const { actor } = this.props;
+        const { actor, handleDeleteActorById } = this.props;
 
         if (!actor) {
             return <LinearProgress />
@@ -55,12 +55,31 @@ class CActorCard extends Component {
                         title={actor.name}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {actor.name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Age: { actor.age } Gender: { this.formatGender(actor.gender) }
-                        </Typography>
+                        <Grid container justify="space-between">
+                            <Grid item xs={1}>
+                            </Grid>
+                            <Grid item xs={8}>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    {actor.name}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    Age: { actor.age } Gender: { this.formatGender(actor.gender) }
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <IconButton
+                                    color="secondary"
+                                    onClick={e => handleDeleteActorById(actor.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    color="primary"
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
                     </CardContent>
                 </CardActionArea>
             </Card>

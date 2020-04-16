@@ -8,7 +8,10 @@ import CActorCard from './CActorCard';
 
 const CActor = (props) => {
 
-    const { actor } = props;
+    const { 
+        actor, 
+        handleDeleteActorById 
+    } = props;
      
     return (
         <div className="main">
@@ -18,6 +21,7 @@ const CActor = (props) => {
                 <Grid item xs={6}>
                     <CActorCard 
                         actor={actor}
+                        handleDeleteActorById={handleDeleteActorById}
                     />
                 </Grid>
             </Grid>

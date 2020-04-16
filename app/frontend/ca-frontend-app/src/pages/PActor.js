@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-    handleGetActorDetails
+    handleGetActorDetails,
+    handleDeleteActor,
+    handleUpdateActor
 } from '../actions/actors';
 import CActor from '../components/CActor';
 
@@ -11,6 +13,13 @@ class PActor extends Component {
 
     state = {
         actorId: null
+    }
+
+    handleDeleteActorById(actorId) {
+
+        this.props.dispatch(handleDeleteActor(actorId));
+
+        this.props.history.goBack();
     }
 
     componentDidMount() {
@@ -31,6 +40,7 @@ class PActor extends Component {
         return (
             <CActor 
                 actor={actor}
+                handleDeleteActorById={this.handleDeleteActorById.bind(this)}
             />
         );
     }
