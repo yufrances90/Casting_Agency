@@ -69,18 +69,26 @@ class CActorCard extends Component {
                     <Grid item xs={10}>
                         </Grid>
                     <Grid item xs={2}>
-                        <IconButton
-                            color="secondary"
-                            onClick={e => handleDeleteActorById(actor.id)}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                        <IconButton
-                            color="primary"
-                            onClick={e => toggleDialog()}
-                        >
-                            <EditIcon />
-                        </IconButton>
+                        {
+                            handleDeleteActorById && (
+                                <IconButton
+                                    color="secondary"
+                                    onClick={e => handleDeleteActorById(actor.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            )
+                        }
+                        {
+                            toggleDialog && (
+                                <IconButton
+                                    color="primary"
+                                    onClick={e => toggleDialog()}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                            )
+                        }
                     </Grid>
                 </CardActions>
             </Card>

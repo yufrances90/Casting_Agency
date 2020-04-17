@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 
-import { LinearProgress } from '@material-ui/core';
+import { 
+    LinearProgress, 
+    Grid 
+} from '@material-ui/core';
 
 import CTabPanel from './CTabPanel';
+import CActorCard from './CActorCard';
 
 
 class CMoviePanel extends Component {
@@ -64,11 +68,26 @@ class CMoviePanel extends Component {
             return <LinearProgress />
         }
 
-        console.log(actors);
-
         return (
             <CTabPanel value={movieId} index={movieId}>
-                {movieId}
+
+                <Grid container justify="space-between">
+
+                    {
+                        actors.map(actor => (
+
+                            <Grid 
+                                item 
+                                xs={4}
+                                key={actor.id}
+                            >
+                                <CActorCard 
+                                    actor={actor}
+                                />
+                            </Grid>
+                        ))
+                    }
+                </Grid>
             </CTabPanel>
         );
     }
