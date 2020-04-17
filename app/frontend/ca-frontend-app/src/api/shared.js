@@ -20,9 +20,12 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
     response => response,
     error => {
+        
         if (error.response) {
             toast.error(error.response.data.message);
         }
+
+        return Promise.reject(error);
     }
 )
 
