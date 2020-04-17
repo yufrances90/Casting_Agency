@@ -37,7 +37,7 @@ class CMoviePanel extends Component {
         await this.setActors();
     }
 
-    componentWillReceiveProps(prevProps) {
+    UNSAFE_componentWillReceiveProps(prevProps) {
 
         if (prevProps.movieId !== this.props.movieId) {
 
