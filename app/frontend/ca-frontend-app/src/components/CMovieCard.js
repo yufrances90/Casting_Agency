@@ -7,7 +7,6 @@ import {
     CardActionArea,
     Typography,
     CardActions,
-    Button,
     Grid,
     IconButton
 } from '@material-ui/core';

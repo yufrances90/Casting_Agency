@@ -7,6 +7,7 @@ import {
 import CShows from '../components/CShows';
 
 import MoviesAPI from '../api/MoviesAPI';
+import ActorsAPI from '../api/ActorsAPI';
 
 class PShows extends Component {
 
@@ -26,10 +27,16 @@ class PShows extends Component {
         });
     }
 
+    async getActorListByMovie(movieId) {
+
+        const res = await ActorsAPI.getActorsByMovie(movieId);
+
+        const { data } = res;
+
+        return data.actors;
+    }
+
     setSelectedMovieId(_, movieId) {
-
-        console.log(movieId);
-
         this.setState({
             movieId
         });
@@ -44,8 +51,11 @@ class PShows extends Component {
         const { movies } = this.state;
 
         if (prevState.movies !== movies) {
+
+            const movieId = movies[0].id
+
             this.setState({
-                movieId: movies[0].id
+                movieId
             });
         }
     }
@@ -59,11 +69,14 @@ class PShows extends Component {
         }
         
         return (
-            <CShows 
-                movies={movies}
-                setSelectedMovieId={this.setSelectedMovieId.bind(this)}
-                movieId={movieId}
-            />
+           <div>
+                <CShows 
+                    movies={movies}
+                    setSelectedMovieId={this.setSelectedMovieId.bind(this)}
+                    movieId={movieId}
+                    getActorListByMovie={this.getActorListByMovie.bind(this)}
+                />
+           </div>
         );
     }
 }

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { TextField,Grid, Divider } from '@material-ui/core';
+import { 
+    TextField, 
+    Grid 
+} from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
+  KeyboardDatePicker
 } from '@material-ui/pickers';
 
 class CMovieForm extends Component {

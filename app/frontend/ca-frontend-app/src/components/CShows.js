@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 
 import CMovieTabs from './CMovieTabs';
-import CTabPanel from './CTabPanel';
+import CMoviePanel from './CMoviePanel';
 
 
 class CShows extends Component {
@@ -15,7 +15,8 @@ class CShows extends Component {
         const { 
             movies,
             setSelectedMovieId,
-            movieId 
+            movieId,
+            getActorListByMovie
         } = this.props;
 
         return (
@@ -29,11 +30,10 @@ class CShows extends Component {
                         />
                     </Grid>
                     <Grid item xs={9}>
-                        {movies.map(movie => (
-                            <CTabPanel value={movieId} index={movie.id}>
-                                {movie.id}
-                            </CTabPanel>
-                        ))}
+                        <CMoviePanel 
+                            movieId={movieId}
+                            getActorListByMovie={getActorListByMovie}
+                        />
                     </Grid>
                 </Grid>
             </div>

@@ -15,8 +15,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { checkPermisson } from '../utils/helpers';
-
 class CActorCard extends Component {
 
     useStyles() {
@@ -31,7 +29,7 @@ class CActorCard extends Component {
     }
 
     formatGender(gender) {
-        return gender == "F"? "Female" : "Male";
+        return gender === "F"? "Female" : "Male";
     }
 
     render() {
