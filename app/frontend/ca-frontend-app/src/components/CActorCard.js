@@ -8,15 +8,14 @@ import {
     Typography,
     CardActions,
     Grid,
-    IconButton
+    IconButton,
+    LinearProgress
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { checkPermisson } from '../utils/helpers';
-
-class CMovieCard extends Component {
+class CActorCard extends Component {
 
     useStyles() {
         return makeStyles({
@@ -29,63 +28,67 @@ class CMovieCard extends Component {
         });
     }
 
-    handleEditButtonClick(movieId) {
-        this.props.handleAddNewMovieButtonClick();
-    }
-
-    handleDeleteButtonClick(movieId) {
-        this.props.removeMovieById(movieId);
+    formatGender(gender) {
+        return gender === "F"? "Female" : "Male";
     }
 
     render() {
 
         const classes = this.useStyles();
 
-        const { movie } = this.props;
+        const { 
+            actor, 
+            handleDeleteActorById,
+            toggleDialog 
+        } = this.props;
+
+        if (!actor) {
+            return <LinearProgress />
+        }
 
         return (
-            <Card className={classes.root}>
-                <CardActionArea>
+           <Card className={classes.root}>
+               <CardActionArea>
                     <CardMedia
                         component="img"
-                        alt={movie.title}
-                        height="400"
-                        image={movie.image_link}
-                        title={movie.title}
+                        alt={actor.name}
+                        height="350"
+                        image={actor.image_link}
+                        title={actor.name}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                            {movie.title}
+                            {actor.name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Released Date: { movie.release_date }
+                            Age: { actor.age } Gender: { this.formatGender(actor.gender) }
                         </Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Grid container justify="space-between">
-                        <Grid item>
+                    <Grid item xs={10}>
                         </Grid>
-                        <Grid item>
-                            {
-                                checkPermisson("delete:movies") && 
-                                <IconButton 
+                    <Grid item xs={2}>
+                        {
+                            handleDeleteActorById && (
+                                <IconButton
                                     color="secondary"
-                                    onClick={e => this.handleDeleteButtonClick(movie.id)}
+                                    onClick={e => handleDeleteActorById(actor.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
-                            }
-                            {
-                                checkPermisson("patch:movies") && 
-                                <IconButton 
+                            )
+                        }
+                        {
+                            toggleDialog && (
+                                <IconButton
                                     color="primary"
-                                    onClick={e => this.handleEditButtonClick(movie.id)}
+                                    onClick={e => toggleDialog()}
                                 >
                                     <EditIcon />
                                 </IconButton>
-                            }
-                        </Grid>
+                            )
+                        }
                     </Grid>
                 </CardActions>
             </Card>
@@ -93,4 +96,4 @@ class CMovieCard extends Component {
     }
 }
 
-export default CMovieCard;
+export default CActorCard;

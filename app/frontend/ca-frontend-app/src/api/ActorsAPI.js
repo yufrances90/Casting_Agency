@@ -9,15 +9,19 @@ const saveNewActor = async (actor) => {
 }
 
 const deleteActor = async (actorId) => {
-    return await instance.delete('/actors/' + actorId, {});
+    return await instance.delete(`/actors/${actorId}`, {});
 }
 
 const updateActor = async (actorId, actor) => {
-    return await instance.patch('/actors/' + actorId, actor);
+    return await instance.patch(`/actors/${actorId}`, actor);
 }
 
 const getActorDetails = async (actorId) => {
-    return await instance.get('/actors/' + actorId, {});
+    return await instance.get(`/actors/${actorId}`, {});
+}
+
+const getActorsByMovie = async (movie_id) => {
+    return await instance.get(`/movies/${movie_id}/actors`, {});
 }
 
 export default {
@@ -25,5 +29,6 @@ export default {
     saveNewActor,
     deleteActor,
     updateActor,
-    getActorDetails
+    getActorDetails,
+    getActorsByMovie
 }

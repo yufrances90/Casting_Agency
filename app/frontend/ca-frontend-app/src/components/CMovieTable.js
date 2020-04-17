@@ -11,6 +11,8 @@ import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom';
 
+import { checkPermisson } from '../utils/helpers';
+
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
@@ -62,12 +64,14 @@ const CMovieTable = (props) => {
                                     {movie.release_date}
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton 
-                                        color="secondary"
-                                        onClick={e => handleDeleteButtonClick(movie.id)}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    {checkPermisson("delete:movies") && 
+                                        <IconButton 
+                                            color="secondary"
+                                            onClick={e => handleDeleteButtonClick(movie.id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    }
                                 </TableCell>
                             </TableRow>
                         ))

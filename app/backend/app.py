@@ -28,7 +28,10 @@ from utils.helpers import \
     update_movie_by_id, \
     get_movie_by_id, \
     add_new_show, \
-    delete_show
+    delete_show, \
+    get_actors_by_movie_id, \
+    get_formatted_movie_only_list, \
+    update_cast_team_by_movie_id
 from auth import requires_auth
 
 
@@ -37,11 +40,17 @@ app.config.from_object('config.DevConfig')
 setup_db(app)
 CORS(app)
 
+
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add(
+        'Access-Control-Allow-Headers', 'Content-Type,Authorization,true'
+    )
+    response.headers.add(
+        'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
+    )
     return response
+
 
 @app.route('/')
 def index():
@@ -87,7 +96,7 @@ def delete_actor(permission, actor_id):
 
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
-@requires_auth('patch:actors')
+@requires_auth(permission='patch:actors')
 def update_actor(permission, actor_id):
 
     request_data = json.loads(request.data)
@@ -99,12 +108,22 @@ def update_actor(permission, actor_id):
 
 
 @app.route('/actors/<int:actor_id>', methods=['GET'])
-@requires_auth('get:actors')
+@requires_auth(permission='get:actors')
 def get_actor(permission, actor_id):
 
     return jsonify({
         'success': True,
         'actor': get_actor_by_id(actor_id)
+    })
+
+
+@app.route('/movies/<int:movie_id>/actors', methods=['GET'])
+@requires_auth(permission='get:actors')
+def get_actors_by_movie(permission, movie_id):
+
+    return jsonify({
+        'success': True,
+        'actors': get_actors_by_movie_id(movie_id)
     })
 
 
@@ -115,9 +134,12 @@ def get_actor(permission, actor_id):
 @requires_auth(permission='get:movies')
 def get_all_movies(permission):
 
+    is_actors_only = request.args.get("isMovieOnly") == 'true'
+
     return jsonify({
         'success': True,
-        'movies': get_formatted_movie_list()
+        'movies': get_formatted_movie_only_list() if is_actors_only
+        else get_formatted_movie_list()
     })
 
 
@@ -170,10 +192,7 @@ def get_movie(permission, movie_id):
 
 @app.route('/shows', methods=['POST'])
 @requires_auth(permission='post:movies')
-@requires_auth(permission='post:actors')
-@requires_auth(permission='get:movies')
-@requires_auth(permission='get:actors')
-def save_new_show():
+def save_new_show(permission):
 
     request_data = json.loads(request.data)
 
@@ -188,14 +207,26 @@ def save_new_show():
 
 @app.route('/shows', methods=['DELETE'])
 @requires_auth(permission='delete:movies')
-@requires_auth(permission='delete:actors')
-@requires_auth(permission='get:movies')
-@requires_auth(permission='get:actors')
-def delete_shows():
+def delete_shows(permission):
 
     request_data = json.loads(request.data)
 
     delete_show(request_data)
+
+    return jsonify({
+        'success': True,
+        'actors': get_formatted_actor_list(),
+        'movies': get_formatted_movie_list()
+    })
+
+
+@app.route('/movies/<int:movie_id>/actors', methods=['PUT'])
+@requires_auth(permission='patch:movies')
+def update_cast_team_by_movie(permission, movie_id):
+
+    request_data = json.loads(request.data)
+
+    update_cast_team_by_movie_id(movie_id, request_data)
 
     return jsonify({
         'success': True,

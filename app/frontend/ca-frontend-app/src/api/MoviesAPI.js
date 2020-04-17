@@ -4,6 +4,17 @@ const getAllMovies = async () => {
     return await instance.get('/movies', {});
 }
 
+const getMovies = async () => {
+
+    const params = {
+        isMovieOnly: 'true'
+    }
+    
+    return await instance.get('/movies', {
+        params
+    });
+}
+
 const saveNewMovie = async (movie) => {
     return await instance.post('/movies', movie);
 }
@@ -25,5 +36,6 @@ export default {
     saveNewMovie,
     deleteMovie,
     updateMovie,
-    getMovieDetails
+    getMovieDetails,
+    getMovies
 }

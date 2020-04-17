@@ -123,6 +123,11 @@ def get_actors_by_movie(movie_id):
         Movie).filter(Movie.id == movie_id).all()
 
 
+def get_actor_ids_by_movie(movie_id):
+    return db.session.query(Actor.id).join(Show).join(
+        Movie).filter(Movie.id == movie_id).all()
+
+
 def get_movies_by_actor(actor_id):
     return db.session.query(Movie).join(Show).join(
         Actor).filter(Actor.id == actor_id).all()
@@ -163,3 +168,19 @@ def delete_show(movie_id, actor_id):
         return
 
     show.delete()
+
+
+def remove_actor_id_by_movie(movie_id, actor_ids_to_remove):
+
+    Show.query.filter_by(movie_id=movie_id)\
+        .filter(Show.actor_id.in_(actor_ids_to_remove))\
+        .delete(synchronize_session=False)
+
+    db.session.commit()
+
+
+def save_new_shows(shows):
+
+    db.session.add_all(shows)
+
+    db.session.commit()

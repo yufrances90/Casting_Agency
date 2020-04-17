@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
+import jwtDecode from 'jwt-decode';
 
 import auth_config from './auth_config.json';
 
@@ -53,6 +54,10 @@ export class Auth0Provider extends Component {
 
         window.localStorage.setItem("access_token", access_token);
 
+        const permissions = jwtDecode(access_token)["permissions"];
+
+        window.localStorage.setItem("permissions", permissions);
+
         this.setState({ user, isAuthenticated: true, isLoading: false });
         window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -75,6 +80,7 @@ export class Auth0Provider extends Component {
                 logout: (...p) => {
                     auth0Client.logout(...p);
                     localStorage.removeItem("access_token");
+                    localStorage.removeItem("permissions");
                 } 
         };
 

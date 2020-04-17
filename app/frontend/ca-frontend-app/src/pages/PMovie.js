@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import { LinearProgress } from '@material-ui/core';
+
 import { connect } from 'react-redux';
 
 import CMovie from '../components/CMovie';
