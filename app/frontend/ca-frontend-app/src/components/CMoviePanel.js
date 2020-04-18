@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { 
     LinearProgress, 
-    Grid 
+    Grid
 } from '@material-ui/core';
 
 import CTabPanel from './CTabPanel';
@@ -69,7 +69,10 @@ class CMoviePanel extends Component {
         }
 
         return (
-            <CTabPanel value={movieId} index={movieId}>
+            <CTabPanel 
+                value={movieId} 
+                index={movieId}
+            >
 
                 <Grid container justify="space-between">
 

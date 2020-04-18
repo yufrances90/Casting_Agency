@@ -13,7 +13,8 @@ class PShows extends Component {
 
     state = {
         movies:[],
-        movieId: null
+        movieId: null,
+        toOpenDialog: false
     }
 
     async getMovieList() {
@@ -42,6 +43,15 @@ class PShows extends Component {
         });
     }
 
+    toggleDialog() {
+
+        const { toOpenDialog } = this.state;
+
+        this.setState({
+            toOpenDialog: !toOpenDialog
+        });
+    }
+
     componentDidMount() {
         this.getMovieList();
     }
@@ -62,7 +72,7 @@ class PShows extends Component {
 
     render() {
 
-        const { movies, movieId } = this.state;
+        const { movies, movieId, toOpenDialog } = this.state;
 
         if (!movies || movies.length === 0 || !movieId) {
             return <LinearProgress />
@@ -75,6 +85,8 @@ class PShows extends Component {
                     setSelectedMovieId={this.setSelectedMovieId.bind(this)}
                     movieId={movieId}
                     getActorListByMovie={this.getActorListByMovie.bind(this)}
+                    toOpenDialog={toOpenDialog}
+                    toggleDialog={this.toggleDialog.bind(this)}
                 />
            </div>
         );

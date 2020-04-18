@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
 import {
-    Grid
+    Grid,
+    Fab
 } from '@material-ui/core';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import CMovieTabs from './CMovieTabs';
 import CMoviePanel from './CMoviePanel';
+import CAssignmentDialog from './CAssignmentDialog';
 
 
 class CShows extends Component {
@@ -16,7 +19,9 @@ class CShows extends Component {
             movies,
             setSelectedMovieId,
             movieId,
-            getActorListByMovie
+            getActorListByMovie,
+            toOpenDialog,
+            toggleDialog
         } = this.props;
 
         return (
@@ -33,6 +38,22 @@ class CShows extends Component {
                         <CMoviePanel 
                             movieId={movieId}
                             getActorListByMovie={getActorListByMovie}
+                        />
+                         <Fab 
+                            style={{
+                                position: 'fixed',
+                                top: '80vh',
+                                right: '5vh',
+                                backgroundColor: "#000000",
+                                color: '#02bef7'
+                            }}
+                            onClick={toggleDialog}
+                        >
+                            <AssignmentIcon />
+                        </Fab>
+                        <CAssignmentDialog 
+                            toOpenDialog={toOpenDialog}
+                            toggleDialog={toggleDialog}
                         />
                     </Grid>
                 </Grid>
