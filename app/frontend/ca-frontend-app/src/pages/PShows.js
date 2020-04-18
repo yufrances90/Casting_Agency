@@ -28,13 +28,16 @@ class PShows extends Component {
         });
     }
 
-    async getActorListByMovie(movieId) {
+    async getActorListsByMovie(movieId) {
 
         const res = await ActorsAPI.getActorsByMovie(movieId);
 
         const { data } = res;
 
-        return data.actors;
+        return {
+            actors: data.actors,
+            otherActors: data["other_actors"]
+        };
     }
 
     setSelectedMovieId(_, movieId) {
@@ -84,7 +87,7 @@ class PShows extends Component {
                     movies={movies}
                     setSelectedMovieId={this.setSelectedMovieId.bind(this)}
                     movieId={movieId}
-                    getActorListByMovie={this.getActorListByMovie.bind(this)}
+                    getActorListsByMovie={this.getActorListsByMovie.bind(this)}
                     toOpenDialog={toOpenDialog}
                     toggleDialog={this.toggleDialog.bind(this)}
                 />

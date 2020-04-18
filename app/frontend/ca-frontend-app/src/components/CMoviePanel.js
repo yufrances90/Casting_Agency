@@ -13,7 +13,8 @@ class CMoviePanel extends Component {
 
     state = {
         actors: [],
-        isReady: false
+        isReady: false,
+        otherActors: []
     }
 
     async setActors() {
@@ -22,13 +23,14 @@ class CMoviePanel extends Component {
             isReady: false
         });
 
-        const { movieId, getActorListByMovie } = this.props;
+        const { movieId, getActorListsByMovie } = this.props;
 
-        const actors = await getActorListByMovie(movieId);
+        const res = await getActorListsByMovie(movieId);
 
         this.setState({
-            actors,
-            isReady: true
+            actors: res.actors,
+            isReady: true,
+            otherActors: res.otherActors
         });
     }
 

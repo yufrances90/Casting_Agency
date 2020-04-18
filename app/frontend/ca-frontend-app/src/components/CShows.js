@@ -19,7 +19,7 @@ class CShows extends Component {
             movies,
             setSelectedMovieId,
             movieId,
-            getActorListByMovie,
+            getActorListsByMovie,
             toOpenDialog,
             toggleDialog
         } = this.props;
@@ -37,7 +37,7 @@ class CShows extends Component {
                     <Grid item xs={9}>
                         <CMoviePanel 
                             movieId={movieId}
-                            getActorListByMovie={getActorListByMovie}
+                            getActorListsByMovie={getActorListsByMovie}
                         />
                          <Fab 
                             style={{
