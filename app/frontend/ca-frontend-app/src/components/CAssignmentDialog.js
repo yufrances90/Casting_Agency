@@ -17,7 +17,8 @@ const CAssignmentDialog = (props) => {
         otherActors, 
         actors,
         selectedActorIds,
-        setSelectedActorIds 
+        setSelectedActorIds,
+        handleSubmit 
     } = props;
 
     return (
@@ -41,7 +42,10 @@ const CAssignmentDialog = (props) => {
                 >
                     Cancel
                 </Button>
-                <Button color="secondary">
+                <Button 
+                    color="secondary"
+                    onClick={handleSubmit}
+                >
                     Submit
                 </Button>
             </DialogActions>

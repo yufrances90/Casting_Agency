@@ -17,7 +17,8 @@ class CShows extends Component {
         actors: [],
         isReady: false,
         otherActors: [],
-        selectedActorIds: []
+        selectedActorIds: [],
+        toShow: true
     }
 
     async setActors() {
@@ -53,6 +54,15 @@ class CShows extends Component {
         this.setActors();
     }
 
+    handleSubmit() {
+
+        const { movieId } = this.props;
+
+        const { selectedActorIds } = this.state;
+
+        this.props.handleSubmitRequest(movieId, selectedActorIds.join());
+    }
+
     UNSAFE_componentWillReceiveProps(prevProps) {
 
         if (prevProps.movieId !== this.props.movieId) {
@@ -80,7 +90,13 @@ class CShows extends Component {
             toggleDialog
         } = this.props;
 
-        const { actors, otherActors, isReady, selectedActorIds } = this.state;
+        const { 
+            actors, 
+            otherActors, 
+            isReady, 
+            selectedActorIds, 
+            toShow 
+        } = this.state;
 
         return (
             <div className="main">
@@ -118,6 +134,7 @@ class CShows extends Component {
                             actors={actors}
                             selectedActorIds={selectedActorIds}
                             setSelectedActorIds={this.setSelectedActorIds.bind(this)}
+                            handleSubmit={this.handleSubmit.bind(this)}
                         />
                     </Grid>
                 </Grid>

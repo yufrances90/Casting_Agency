@@ -59,13 +59,17 @@ class PShows extends Component {
         });
     }
 
-    componentDidMount() {
+    handleSubmitRequest(movieId, actorIds) {
 
-        this.getMovieList();
-
-        this.props.dispatch(handleUpdateCastTeamByMovie(4, {
-            "actor_ids": "10"
+        this.props.dispatch(handleUpdateCastTeamByMovie(movieId, {
+            "actor_ids": actorIds
         }));
+
+        this.toggleDialog();
+    }
+
+    componentDidMount() {
+        this.getMovieList();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -99,6 +103,7 @@ class PShows extends Component {
                     getActorListsByMovie={this.getActorListsByMovie.bind(this)}
                     toOpenDialog={toOpenDialog}
                     toggleDialog={this.toggleDialog.bind(this)}
+                    handleSubmitRequest={this.handleSubmitRequest.bind(this)}
                 />
            </div>
         );
