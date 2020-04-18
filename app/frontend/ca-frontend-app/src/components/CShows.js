@@ -33,10 +33,15 @@ class CShows extends Component {
 
         this.setState({
             actors: res.actors,
-            isReady: true,
             otherActors: res.otherActors,
             selectedActorIds: res.actors.map(actor => actor.id)
         });
+
+        setTimeout(() => {
+            this.setState({
+                isReady: true
+            });
+        }, 500)
     }
 
     setSelectedActorIds(selectedActors) {
@@ -54,13 +59,21 @@ class CShows extends Component {
         this.setActors();
     }
 
-    handleSubmit() {
+    async handleSubmit() {
+
+        this.setState({
+            isReady: false
+        });
 
         const { movieId } = this.props;
 
         const { selectedActorIds } = this.state;
 
         this.props.handleSubmitRequest(movieId, selectedActorIds.join());
+
+        setTimeout(() => {
+            this.setActors()
+        }, 500);
     }
 
     UNSAFE_componentWillReceiveProps(prevProps) {
