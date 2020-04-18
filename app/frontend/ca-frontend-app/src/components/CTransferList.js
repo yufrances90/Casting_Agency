@@ -41,16 +41,21 @@ function union(a, b) {
     return [...a, ...not(b, a)];
 }
 
-export default function CTransferList() {
+export default function CTransferList(props) {
+
+    const { actors, otherActors, setSelectedActorIds } = props;
+
     const classes = useStyles();
+
     const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState([0, 1, 2, 3]);
-    const [right, setRight] = React.useState([4, 5, 6, 7]);
+    const [left, setLeft] = React.useState(otherActors);
+    const [right, setRight] = React.useState(actors);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
 
     const handleToggle = (value) => () => {
+
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
@@ -58,7 +63,7 @@ export default function CTransferList() {
             newChecked.push(value);
         } else {
             newChecked.splice(currentIndex, 1);
-    }
+        }
 
         setChecked(newChecked);
   };
@@ -74,15 +79,23 @@ export default function CTransferList() {
     };
 
     const handleCheckedRight = () => {
+
         setRight(right.concat(leftChecked));
         setLeft(not(left, leftChecked));
+
         setChecked(not(checked, leftChecked));
+
+        setSelectedActorIds(right.concat(leftChecked));
     };
 
     const handleCheckedLeft = () => {
+
         setLeft(left.concat(rightChecked));
         setRight(not(right, rightChecked));
+
         setChecked(not(checked, rightChecked));
+
+        setSelectedActorIds(not(right, rightChecked));
     };
 
     const customList = (title, items) => (
@@ -103,22 +116,22 @@ export default function CTransferList() {
             />
             <Divider />
             <List className={classes.list} dense component="div" role="list">
-                {items.map((value) => {
+                {items.map((item) => {
 
-                    const labelId = `transfer-list-all-item-${value}-label`;
+                    const labelId = `transfer-list-all-item-${item.name}-label`;
 
                     return (
-                        <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+                        <ListItem key={item.id} role="listitem" button onClick={handleToggle(item)}>
 
                             <ListItemIcon>
                                 <Checkbox
-                                    checked={checked.indexOf(value) !== -1}
+                                    checked={checked.indexOf(item) !== -1}
                                     tabIndex={-1}
                                     disableRipple
                                     inputProps={{ 'aria-labelledby': labelId }}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+                            <ListItemText id={item.id} primary={item.name} />
                         </ListItem>
                     );
                 })}

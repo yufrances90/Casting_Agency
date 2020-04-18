@@ -15,7 +15,9 @@ const CAssignmentDialog = (props) => {
         toOpenDialog, 
         toggleDialog, 
         otherActors, 
-        actors 
+        actors,
+        selectedActorIds,
+        setSelectedActorIds 
     } = props;
 
     return (
@@ -25,7 +27,12 @@ const CAssignmentDialog = (props) => {
                 Assgn Actors to Movie
             </DialogTitle>
             <DialogContent>
-                <CTransferList />
+                <CTransferList 
+                    otherActors={otherActors}
+                    actors={actors}
+                    setSelectedActorIds={setSelectedActorIds}
+                />
+                IDs: {JSON.stringify(selectedActorIds)}
             </DialogContent>
             <DialogActions>
                 <Button 

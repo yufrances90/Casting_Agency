@@ -16,7 +16,8 @@ class CShows extends Component {
     state = {
         actors: [],
         isReady: false,
-        otherActors: []
+        otherActors: [],
+        selectedActorIds: []
     }
 
     async setActors() {
@@ -32,7 +33,14 @@ class CShows extends Component {
         this.setState({
             actors: res.actors,
             isReady: true,
-            otherActors: res.otherActors
+            otherActors: res.otherActors,
+            selectedActorIds: res.actors.map(actor => actor.id)
+        });
+    }
+
+    setSelectedActorIds(selectedActors) {
+        this.setState({
+            selectedActorIds: selectedActors.map(actor => actor.id)
         });
     }
 
@@ -72,7 +80,7 @@ class CShows extends Component {
             toggleDialog
         } = this.props;
 
-        const { actors, otherActors, isReady } = this.state;
+        const { actors, otherActors, isReady, selectedActorIds } = this.state;
 
         return (
             <div className="main">
@@ -108,6 +116,8 @@ class CShows extends Component {
                             toggleDialog={toggleDialog}
                             otherActors={otherActors}
                             actors={actors}
+                            selectedActorIds={selectedActorIds}
+                            setSelectedActorIds={this.setSelectedActorIds.bind(this)}
                         />
                     </Grid>
                 </Grid>
