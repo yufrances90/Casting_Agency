@@ -1,47 +1,22 @@
 import { actionContants } from '../utils/constants';
 import ShowsAPI from '../api/ShowsAPI';
 
-const assignActorToMovieAction = ({actors, movies}) => {
+const updateCastTeamByMovieAction = ({actors, movies}) => {
     return {
-        type: actionContants.ASSIGN_ACTOR_TO_MOVIE,
+        type: actionContants.UPDATE_CAST_TEAM_BY_MOVIE,
         actors,
         movies
-    }
+    };
 }
 
-const unlinkActorFromMovieAction = ({actors, movies}) => {
-    return {
-        type: actionContants.UNLINK_ACTOR_FROM_MOVIE,
-        actors,
-        movies
-    }
-}
-
-const handleAssignActorToMovie = (show) => {
+export const handleUpdateCastTeamByMovie = (movieId, requestObj) => {
     return (dispatch) => {
-        return ShowsAPI.assignActorToMovie(show)
+        return ShowsAPI.updateCastTeamByMovie(movieId, requestObj)
         .then(res => {
-            dispatch(assignActorToMovieAction({
-                actors: res.actors,
-                movies: res.movies
+            dispatch(updateCastTeamByMovieAction({
+                actors: res.data.actors,
+                movies: res.data.movies
             }))
         })
     }
-}
-
-const handleUnlinkActorFromMovie = (show) => {
-    return (dispatch) => {
-        return ShowsAPI.unlinkActorFromMovie(show)
-        .then(res => {
-            dispatch(unlinkActorFromMovieAction({
-                actors: res.actors,
-                movies: res.movies
-            }))
-        })
-    }
-}
-
-export default {
-    handleAssignActorToMovie,
-    handleUnlinkActorFromMovie
 }

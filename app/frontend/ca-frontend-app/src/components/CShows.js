@@ -1,14 +1,97 @@
 import React, { Component } from 'react';
 
 import {
-    Grid
+    Grid,
+    Fab
 } from '@material-ui/core';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import CMovieTabs from './CMovieTabs';
 import CMoviePanel from './CMoviePanel';
+import CAssignmentDialog from './CAssignmentDialog';
 
 
 class CShows extends Component {
+
+    state = {
+        actors: [],
+        isReady: false,
+        otherActors: [],
+        selectedActorIds: [],
+        toShow: true
+    }
+
+    async setActors() {
+
+        this.setState({
+            isReady: false
+        });
+
+        const { movieId, getActorListsByMovie } = this.props;
+
+        const res = await getActorListsByMovie(movieId);
+
+        this.setState({
+            actors: res.actors,
+            otherActors: res.otherActors,
+            selectedActorIds: res.actors.map(actor => actor.id)
+        });
+
+        setTimeout(() => {
+            this.setState({
+                isReady: true
+            });
+        }, 500)
+    }
+
+    setSelectedActorIds(selectedActors) {
+        this.setState({
+            selectedActorIds: selectedActors.map(actor => actor.id)
+        });
+    }
+
+    componentDidMount() {
+
+        this.setState({
+            isReady: false
+        });
+
+        this.setActors();
+    }
+
+    async handleSubmit() {
+
+        this.setState({
+            isReady: false
+        });
+
+        const { movieId } = this.props;
+
+        const { selectedActorIds } = this.state;
+
+        this.props.handleSubmitRequest(movieId, selectedActorIds.join());
+
+        setTimeout(() => {
+            this.setActors()
+        }, 500);
+    }
+
+    UNSAFE_componentWillReceiveProps(prevProps) {
+
+        if (prevProps.movieId !== this.props.movieId) {
+
+            this.setState({
+                isReady: false
+            });
+        } 
+    }
+
+    componentDidUpdate(prevProps) {
+
+        if (prevProps.movieId !== this.props.movieId) {
+            this.setActors();
+        } 
+    }
 
     render() {
 
@@ -16,8 +99,17 @@ class CShows extends Component {
             movies,
             setSelectedMovieId,
             movieId,
-            getActorListByMovie
+            toOpenDialog,
+            toggleDialog
         } = this.props;
+
+        const { 
+            actors, 
+            otherActors, 
+            isReady, 
+            selectedActorIds, 
+            toShow 
+        } = this.state;
 
         return (
             <div className="main">
@@ -32,7 +124,30 @@ class CShows extends Component {
                     <Grid item xs={9}>
                         <CMoviePanel 
                             movieId={movieId}
-                            getActorListByMovie={getActorListByMovie}
+                            actors={actors}
+                            otherActors={otherActors}
+                            isReady={isReady}
+                        />
+                         <Fab 
+                            style={{
+                                position: 'fixed',
+                                top: '80vh',
+                                right: '5vh',
+                                backgroundColor: "#000000",
+                                color: '#02bef7'
+                            }}
+                            onClick={toggleDialog}
+                        >
+                            <AssignmentIcon />
+                        </Fab>
+                        <CAssignmentDialog 
+                            toOpenDialog={toOpenDialog}
+                            toggleDialog={toggleDialog}
+                            otherActors={otherActors}
+                            actors={actors}
+                            selectedActorIds={selectedActorIds}
+                            setSelectedActorIds={this.setSelectedActorIds.bind(this)}
+                            handleSubmit={this.handleSubmit.bind(this)}
                         />
                     </Grid>
                 </Grid>

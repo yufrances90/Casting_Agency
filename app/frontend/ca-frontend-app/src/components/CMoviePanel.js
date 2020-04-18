@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { 
     LinearProgress, 
-    Grid 
+    Grid
 } from '@material-ui/core';
 
 import CTabPanel from './CTabPanel';
@@ -10,68 +10,22 @@ import CActorCard from './CActorCard';
 
 
 class CMoviePanel extends Component {
-
-    state = {
-        actors: [],
-        isReady: false
-    }
-
-    async setActors() {
-
-        this.setState({
-            isReady: false
-        });
-
-        const { movieId, getActorListByMovie } = this.props;
-
-        const actors = await getActorListByMovie(movieId);
-
-        this.setState({
-            actors,
-            isReady: true
-        });
-    }
-
-    async componentDidMount() {
-
-        this.setState({
-            isReady: false
-        });
-
-        await this.setActors();
-    }
-
-    UNSAFE_componentWillReceiveProps(prevProps) {
-
-        if (prevProps.movieId !== this.props.movieId) {
-
-            this.setState({
-                isReady: false
-            });
-        } 
-    }
-
-    componentDidUpdate(prevProps) {
-
-        if (prevProps.movieId !== this.props.movieId) {
-            this.setActors();
-        } 
-    }
     
     render() {
 
-        const { movieId } = this.props;
-
-        const { actors, isReady } = this.state;
+        const { movieId, actors, isReady } = this.props;
 
         if (!isReady) {
             return <LinearProgress />
         }
 
         return (
-            <CTabPanel value={movieId} index={movieId}>
+            <CTabPanel 
+                value={movieId} 
+                index={movieId}
+            >
 
-                <Grid container justify="space-between">
+                <Grid container spacing={5}>
 
                     {
                         actors.map(actor => (

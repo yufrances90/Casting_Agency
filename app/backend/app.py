@@ -31,7 +31,8 @@ from utils.helpers import \
     delete_show, \
     get_actors_by_movie_id, \
     get_formatted_movie_only_list, \
-    update_cast_team_by_movie_id
+    update_cast_team_by_movie_id, \
+    get_actors_not_in_movie_by_id
 from auth import requires_auth
 
 
@@ -54,6 +55,7 @@ def after_request(response):
 
 @app.route('/')
 def index():
+
     return jsonify({
         'msg': 'Wecome to Casting Agency API',
         'success': True
@@ -123,7 +125,8 @@ def get_actors_by_movie(permission, movie_id):
 
     return jsonify({
         'success': True,
-        'actors': get_actors_by_movie_id(movie_id)
+        'actors': get_actors_by_movie_id(movie_id),
+        'other_actors': get_actors_not_in_movie_by_id(movie_id)
     })
 
 

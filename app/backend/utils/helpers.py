@@ -13,7 +13,8 @@ from models import \
     get_show_by_movie_and_actor, \
     get_actor_ids_by_movie, \
     remove_actor_id_by_movie, \
-    save_new_shows
+    save_new_shows, \
+    get_actors_not_in_movie
 from error import ErrorCodes, CastingAgencyError, ErrorMessages
 
 
@@ -367,3 +368,11 @@ def update_cast_team_by_movie_id(movie_id, request_data):
         new_shows.append(Show(actor_id=actor_id, movie_id=movie_id))
 
     save_new_shows(new_shows)
+
+
+def get_actors_not_in_movie_by_id(movie_id):
+
+    actors_not_in_movie = get_actors_not_in_movie(movie_id)
+
+    return [actor.format() for actor in actors_not_in_movie]
+

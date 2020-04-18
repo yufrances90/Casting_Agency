@@ -4,16 +4,21 @@ import {
     LinearProgress
 } from '@material-ui/core';
 
+import { connect } from 'react-redux';
+
 import CShows from '../components/CShows';
 
 import MoviesAPI from '../api/MoviesAPI';
 import ActorsAPI from '../api/ActorsAPI';
 
+import { handleUpdateCastTeamByMovie } from '../actions/shows';
+
 class PShows extends Component {
 
     state = {
         movies:[],
-        movieId: null
+        movieId: null,
+        toOpenDialog: false
     }
 
     async getMovieList() {
@@ -27,19 +32,40 @@ class PShows extends Component {
         });
     }
 
-    async getActorListByMovie(movieId) {
+    async getActorListsByMovie(movieId) {
 
         const res = await ActorsAPI.getActorsByMovie(movieId);
 
         const { data } = res;
 
-        return data.actors;
+        return {
+            actors: data.actors,
+            otherActors: data["other_actors"]
+        };
     }
 
     setSelectedMovieId(_, movieId) {
         this.setState({
             movieId
         });
+    }
+
+    toggleDialog() {
+
+        const { toOpenDialog } = this.state;
+
+        this.setState({
+            toOpenDialog: !toOpenDialog
+        });
+    }
+
+    handleSubmitRequest(movieId, actorIds) {
+
+        this.props.dispatch(handleUpdateCastTeamByMovie(movieId, {
+            "actor_ids": actorIds
+        }));
+
+        this.toggleDialog();
     }
 
     componentDidMount() {
@@ -62,7 +88,7 @@ class PShows extends Component {
 
     render() {
 
-        const { movies, movieId } = this.state;
+        const { movies, movieId, toOpenDialog } = this.state;
 
         if (!movies || movies.length === 0 || !movieId) {
             return <LinearProgress />
@@ -74,11 +100,22 @@ class PShows extends Component {
                     movies={movies}
                     setSelectedMovieId={this.setSelectedMovieId.bind(this)}
                     movieId={movieId}
-                    getActorListByMovie={this.getActorListByMovie.bind(this)}
+                    getActorListsByMovie={this.getActorListsByMovie.bind(this)}
+                    toOpenDialog={toOpenDialog}
+                    toggleDialog={this.toggleDialog.bind(this)}
+                    handleSubmitRequest={this.handleSubmitRequest.bind(this)}
                 />
            </div>
         );
     }
 }
 
-export default PShows;
+function mapStateToProps({ actors, movies }) {
+
+    return {
+        actors,
+        movies
+    }
+}
+
+export default connect(mapStateToProps)(PShows);

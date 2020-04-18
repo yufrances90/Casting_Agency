@@ -184,3 +184,10 @@ def save_new_shows(shows):
     db.session.add_all(shows)
 
     db.session.commit()
+
+
+def get_actors_not_in_movie(movie_id):
+
+    t = db.session.query(Show.actor_id).filter(Show.movie_id == movie_id).subquery('t')
+
+    return Actor.query.filter(~Actor.id.in_(t)).all()
