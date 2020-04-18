@@ -7,6 +7,8 @@ import {
     Button
 } from '@material-ui/core';
 
+import CTransferList from './CTransferList';
+
 const CAssignmentDialog = (props) => {
 
     const { 
@@ -23,7 +25,7 @@ const CAssignmentDialog = (props) => {
                 Assgn Actors to Movie
             </DialogTitle>
             <DialogContent>
-
+                <CTransferList />
             </DialogContent>
             <DialogActions>
                 <Button 
