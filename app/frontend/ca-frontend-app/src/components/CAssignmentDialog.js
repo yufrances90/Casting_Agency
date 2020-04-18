@@ -16,7 +16,6 @@ const CAssignmentDialog = (props) => {
         toggleDialog, 
         otherActors, 
         actors,
-        selectedActorIds,
         setSelectedActorIds,
         handleSubmit 
     } = props;
@@ -33,7 +32,6 @@ const CAssignmentDialog = (props) => {
                     actors={actors}
                     setSelectedActorIds={setSelectedActorIds}
                 />
-                IDs: {JSON.stringify(selectedActorIds)}
             </DialogContent>
             <DialogActions>
                 <Button 
