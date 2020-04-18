@@ -25,8 +25,7 @@ const movies = (state = initialState, action) => {
                 movie: action.movie
             };
         case actionContants.GET_ALL_MOVIES:
-        case actionContants.ASSIGN_ACTOR_TO_MOVIE:
-        case actionContants.UNLINK_ACTOR_FROM_MOVIE:
+        case actionContants.UPDATE_CAST_TEAM_BY_MOVIE:
             return {
                 ...state,
                 list: [...action.movies]

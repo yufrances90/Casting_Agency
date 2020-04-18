@@ -25,7 +25,7 @@ class CMoviePanel extends Component {
                 index={movieId}
             >
 
-                <Grid container justify="space-between">
+                <Grid container spacing={5}>
 
                     {
                         actors.map(actor => (

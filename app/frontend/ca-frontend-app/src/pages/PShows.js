@@ -4,10 +4,14 @@ import {
     LinearProgress
 } from '@material-ui/core';
 
+import { connect } from 'react-redux';
+
 import CShows from '../components/CShows';
 
 import MoviesAPI from '../api/MoviesAPI';
 import ActorsAPI from '../api/ActorsAPI';
+
+import { handleUpdateCastTeamByMovie } from '../actions/shows';
 
 class PShows extends Component {
 
@@ -56,7 +60,12 @@ class PShows extends Component {
     }
 
     componentDidMount() {
+
         this.getMovieList();
+
+        this.props.dispatch(handleUpdateCastTeamByMovie(4, {
+            "actor_ids": "10"
+        }));
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -96,4 +105,12 @@ class PShows extends Component {
     }
 }
 
-export default PShows;
+function mapStateToProps({ actors, movies }) {
+
+    return {
+        actors,
+        movies
+    }
+}
+
+export default connect(mapStateToProps)(PShows);

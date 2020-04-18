@@ -20,8 +20,8 @@ const getActorDetails = async (actorId) => {
     return await instance.get(`/actors/${actorId}`, {});
 }
 
-const getActorsByMovie = async (movie_id) => {
-    return await instance.get(`/movies/${movie_id}/actors`, {});
+const getActorsByMovie = async (movieId) => {
+    return await instance.get(`/movies/${movieId}/actors`, {});
 }
 
 export default {
