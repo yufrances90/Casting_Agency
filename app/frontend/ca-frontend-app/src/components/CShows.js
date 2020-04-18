@@ -13,16 +13,66 @@ import CAssignmentDialog from './CAssignmentDialog';
 
 class CShows extends Component {
 
+    state = {
+        actors: [],
+        isReady: false,
+        otherActors: []
+    }
+
+    async setActors() {
+
+        this.setState({
+            isReady: false
+        });
+
+        const { movieId, getActorListsByMovie } = this.props;
+
+        const res = await getActorListsByMovie(movieId);
+
+        this.setState({
+            actors: res.actors,
+            isReady: true,
+            otherActors: res.otherActors
+        });
+    }
+
+    componentDidMount() {
+
+        this.setState({
+            isReady: false
+        });
+
+        this.setActors();
+    }
+
+    UNSAFE_componentWillReceiveProps(prevProps) {
+
+        if (prevProps.movieId !== this.props.movieId) {
+
+            this.setState({
+                isReady: false
+            });
+        } 
+    }
+
+    componentDidUpdate(prevProps) {
+
+        if (prevProps.movieId !== this.props.movieId) {
+            this.setActors();
+        } 
+    }
+
     render() {
 
         const { 
             movies,
             setSelectedMovieId,
             movieId,
-            getActorListsByMovie,
             toOpenDialog,
             toggleDialog
         } = this.props;
+
+        const { actors, otherActors, isReady } = this.state;
 
         return (
             <div className="main">
@@ -37,7 +87,9 @@ class CShows extends Component {
                     <Grid item xs={9}>
                         <CMoviePanel 
                             movieId={movieId}
-                            getActorListsByMovie={getActorListsByMovie}
+                            actors={actors}
+                            otherActors={otherActors}
+                            isReady={isReady}
                         />
                          <Fab 
                             style={{
@@ -54,6 +106,8 @@ class CShows extends Component {
                         <CAssignmentDialog 
                             toOpenDialog={toOpenDialog}
                             toggleDialog={toggleDialog}
+                            otherActors={otherActors}
+                            actors={actors}
                         />
                     </Grid>
                 </Grid>

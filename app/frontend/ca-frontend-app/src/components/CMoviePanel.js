@@ -10,61 +10,10 @@ import CActorCard from './CActorCard';
 
 
 class CMoviePanel extends Component {
-
-    state = {
-        actors: [],
-        isReady: false,
-        otherActors: []
-    }
-
-    async setActors() {
-
-        this.setState({
-            isReady: false
-        });
-
-        const { movieId, getActorListsByMovie } = this.props;
-
-        const res = await getActorListsByMovie(movieId);
-
-        this.setState({
-            actors: res.actors,
-            isReady: true,
-            otherActors: res.otherActors
-        });
-    }
-
-    async componentDidMount() {
-
-        this.setState({
-            isReady: false
-        });
-
-        await this.setActors();
-    }
-
-    UNSAFE_componentWillReceiveProps(prevProps) {
-
-        if (prevProps.movieId !== this.props.movieId) {
-
-            this.setState({
-                isReady: false
-            });
-        } 
-    }
-
-    componentDidUpdate(prevProps) {
-
-        if (prevProps.movieId !== this.props.movieId) {
-            this.setActors();
-        } 
-    }
     
     render() {
 
-        const { movieId } = this.props;
-
-        const { actors, isReady } = this.state;
+        const { movieId, actors, isReady } = this.props;
 
         if (!isReady) {
             return <LinearProgress />

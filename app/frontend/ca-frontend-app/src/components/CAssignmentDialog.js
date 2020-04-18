@@ -9,7 +9,12 @@ import {
 
 const CAssignmentDialog = (props) => {
 
-    const { toOpenDialog, toggleDialog } = props;
+    const { 
+        toOpenDialog, 
+        toggleDialog, 
+        otherActors, 
+        actors 
+    } = props;
 
     return (
 
