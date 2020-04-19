@@ -330,12 +330,16 @@ def raise_exception_if_link_btw_actor_and_movie_exists(actor_id, movie_id):
 
 def get_actors_by_movie_id(movie_id):
 
+    get_movie_by_movie_id(movie_id)
+
     actors = get_actors_by_movie(movie_id)
 
     return [actor.format() for actor in actors]
 
 
 def update_cast_team_by_movie_id(movie_id, request_data):
+
+    get_movie_by_movie_id(movie_id)
 
     saved_actors = get_actors_by_movie(movie_id)
 
