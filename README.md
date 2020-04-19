@@ -80,7 +80,9 @@ $ python app.py
 #### Frontend
 
 ```
-until finished
+$ cd app/frontend/ca-frontend-app
+$ npm install
+$ yarn start
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
