@@ -379,4 +379,3 @@ def get_actors_not_in_movie_by_id(movie_id):
     actors_not_in_movie = get_actors_not_in_movie(movie_id)
 
     return [actor.format() for actor in actors_not_in_movie]
-

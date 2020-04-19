@@ -28,6 +28,7 @@ class ErrorCodes(Enum):
     ERR_NO_CAST_TEAM_INFO_PROVIDED = 'CAE0015'
     ERR_NO_REQUEST_DATA_PROVIDED = 'CAE0016'
 
+
 class ErrorMessages(Enum):
     ERR_EXISTS_LINK_BTW_ACTOR_AND_MOVIE = '''
         Cannot delete actor or movie due to existing shows
@@ -43,15 +44,15 @@ class ErrorMessages(Enum):
     ERR_EXISTING_SHOW_FOUND = 'Existing show found'
     ERR_NO_HEADERS_FOUND = 'No header is present'
     ERR_MALFORMED_HEADER = 'The header is malformed'
-    ERR_PERMISSIONS_NOT_INCLUDED = ''' 
-        Permissions are not included in the payload 
+    ERR_PERMISSIONS_NOT_INCLUDED = '''
+        Permissions are not included in the payload
     '''
     ERR_UNAUTHORIZED_ACTION = 'Action is not authorized'
     ERR_EXPIRED_TOKEN = 'Token expired'
-    ERR_INVALID_CLAIMS= ''' 
-        Incorrect claims. Please, check the audience and issuer 
+    ERR_INVALID_CLAIMS = '''
+        Incorrect claims. Please, check the audience and issuer
     '''
-    ERR_FAILED_PARSING_AUTHENTICATION_TOKEN = ''' 
+    ERR_FAILED_PARSING_AUTHENTICATION_TOKEN = '''
         Unable to parse authentication token
     '''
     ERR_NO_APPROPRIATE_KEY_FOUND = '''
