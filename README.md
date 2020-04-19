@@ -85,7 +85,9 @@ $ npm install
 $ yarn start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+### Sceenshots
+
+![1](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/1.png)
 
 ## Running the tests
 
