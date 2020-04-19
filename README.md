@@ -102,23 +102,11 @@ $ yarn start
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+> Open Postman
+> Import backend/casting_agency_final.postman_collection.json
+> Replace all tokens in Authorization header with valid ones
+> Run
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
