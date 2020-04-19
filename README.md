@@ -89,6 +89,17 @@ $ yarn start
 
 ![1](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/1.png)
 
+![2](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/2.png)
+
+![3](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/3.png)
+
+![4](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/4.png)
+
+![5](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/5.png)
+
+![6](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/6.png)
+
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
