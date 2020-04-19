@@ -24,7 +24,7 @@ const CAssignmentDialog = (props) => {
 
         <Dialog open={toOpenDialog}>
             <DialogTitle>
-                Assgn Actors to Movie
+                Select Cast Team
             </DialogTitle>
             <DialogContent>
                 <CTransferList 
