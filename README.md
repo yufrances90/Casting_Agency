@@ -139,7 +139,7 @@ Add additional notes about how to deploy this on a live system
 
 ## API Reference
 
-See []() for documentation of API behavior and RBAC controls
+See [API.md](https://github.com/yufrances90/Casting_Agency/blob/master/API.md) for documentation of API behavior and RBAC controls
 
 ## Authors
 
