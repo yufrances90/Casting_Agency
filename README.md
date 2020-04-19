@@ -85,7 +85,20 @@ $ npm install
 $ yarn start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+### Sceenshots
+
+![1](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/1.png)
+
+![2](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/2.png)
+
+![3](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/3.png)
+
+![4](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/4.png)
+
+![5](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/5.png)
+
+![6](https://github.com/yufrances90/Casting_Agency/blob/master/sceenshots/6.png)
+
 
 ## Running the tests
 
@@ -126,7 +139,7 @@ Add additional notes about how to deploy this on a live system
 
 ## API Reference
 
-See []() for documentation of API behavior and RBAC controls
+See [API.md](https://github.com/yufrances90/Casting_Agency/blob/master/API.md) for documentation of API behavior and RBAC controls
 
 ## Authors
 
