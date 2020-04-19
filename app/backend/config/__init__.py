@@ -14,11 +14,7 @@ class Config(object):
 
 class DevConfig(Config):
 
-    dname = 'casting_agency_db'
-    username = 'beijiayu'
-    port = 5432
-
-    SQLALCHEMY_DATABASE_URI = f'postgres://{username}@localhost:{port}/{dname}'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = os.getenv('SECRET_KEY')
