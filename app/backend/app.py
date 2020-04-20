@@ -16,7 +16,7 @@ from flask_cors import CORS
 
 from models import setup_db, Gender
 from error import CastingAgencyError
-from utils.helpers import \
+from services import \
     get_formatted_actor_list, \
     save_actor, \
     delete_actor_by_id, \
